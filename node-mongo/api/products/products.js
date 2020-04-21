@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const mongooose = require("mongoose");
 
-const Product = require("../models/product");
+const Product = require("./m-product");
 
 router.get("/", (req, res, next) => {
     Product.find()
@@ -56,15 +56,15 @@ router.post("/", (req, res, next) => {
                     price: result.price,
                     _id: result._id,
                     request1: {
-                        title: 'Show this single data',
-                        type: 'GET',
-                        url: 'http://localhost:3000/products/' + result._id
+                        title: "Show this single data",
+                        type: "GET",
+                        url: "http://localhost:3000/products/" + result._id,
                     },
                     request2: {
-                        title: 'Show all data',
-                        type: 'GET',
-                        url: 'http://localhost:3000/products/'
-                    }
+                        title: "Show all data",
+                        type: "GET",
+                        url: "http://localhost:3000/products/",
+                    },
                 },
             });
         })
@@ -79,28 +79,28 @@ router.post("/", (req, res, next) => {
 router.get("/:productId", (req, res, next) => {
     const id = req.params.productId;
     Product.findById(id)
-        .select('name price _id')
+        .select("name price _id")
         .exec()
-        .then(doc => {
+        .then((doc) => {
             console.log("From database", doc);
             if (doc) {
                 res.status(200).json({
                     product: doc,
                     request1: {
-                        title: 'Get all data',
-                        type: 'GET',
-                        url: 'http://localhost:3000/products/'
+                        title: "Get all data",
+                        type: "GET",
+                        url: "http://localhost:3000/products/",
                     },
                     request2: {
-                        title: 'Update this data',
-                        type: 'PATCH',
-                        url: 'http://localhost:3000/products/' + id
+                        title: "Update this data",
+                        type: "PATCH",
+                        url: "http://localhost:3000/products/" + id,
                     },
                     request3: {
-                        title: 'Delete this data',
-                        type: 'DELETE',
-                        url: 'http://localhost:3000/products/' + id
-                    }
+                        title: "Delete this data",
+                        type: "DELETE",
+                        url: "http://localhost:3000/products/" + id,
+                    },
                 });
             } else {
                 res.status(404).json({
@@ -124,11 +124,11 @@ router.patch("/:productId", (req, res, next) => {
             $set: req.body,
         })
         .exec()
-        .then(result => {
+        .then((result) => {
             res.status(200).json({
-                message: 'Product updated',
-                request: 'GET',
-                url: 'http://localhost:3000/products/' + id
+                message: "Product updated",
+                request: "GET",
+                url: "http://localhost:3000/products/" + id,
             });
         })
         .catch((err) => {
@@ -147,15 +147,15 @@ router.delete("/:productId", (req, res, next) => {
         .exec()
         .then((result) => {
             res.status(200).json({
-                message: 'Product deleted',
+                message: "Product deleted",
                 request: {
-                    type: 'POST',
-                    url: 'http://localhost:3000/products/',
+                    type: "POST",
+                    url: "http://localhost:3000/products/",
                     body: {
-                        name: 'String',
-                        price: 'Number'
-                    }
-                }
+                        name: "String",
+                        price: "Number",
+                    },
+                },
             });
         })
         .catch((err) => {

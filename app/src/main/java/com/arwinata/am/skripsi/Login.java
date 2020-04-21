@@ -1,13 +1,17 @@
 package com.arwinata.am.skripsi;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -20,18 +24,28 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.arwinata.am.skripsi.Retrofit.IMyService;
+import com.arwinata.am.skripsi.Retrofit.LoginResult;
 import com.arwinata.am.skripsi.Retrofit.RetrofitClient;
 import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
+import java.util.HashMap;
+
 public class Login extends AppCompatActivity {
 
+    private String BASE_URL = "http://192.168.1.70:3000";
+
+    private Retrofit retrofit;
+    private IMyService retrofitInterface;
     TextView txt_create_account;
     MaterialEditText edt_login_email, edt_login_password;
     Button btn_login;
 
     CompositeDisposable compositeDisposible = new CompositeDisposable();
     IMyService iMyService;
+
+    public Login() {
+    }
 
     @Override
     protected void onStop(){
@@ -45,6 +59,11 @@ public class Login extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         //init service
+        retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        retrofitInterface = retrofit.create(IMyService.class);
         Retrofit retrofitClient = RetrofitClient.getInstance();
         iMyService = retrofitClient.create(IMyService.class);
 
@@ -55,8 +74,41 @@ public class Login extends AppCompatActivity {
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                loginUser(edt_login_email.getText().toString(),
-                        edt_login_password.getText().toString());
+
+                HashMap<String, String> map = new HashMap<>();
+
+                map.put("email", edt_login_email.getText().toString());
+                map.put("password", edt_login_password.getText().toString());
+
+                Call<LoginResult> call = retrofitInterface.executeLogin(map);
+
+                call.enqueue(new Callback<LoginResult>() {
+                    @Override
+                    public void onResponse(Call<LoginResult> call, Response<LoginResult> response) {
+
+                        if(response.code() == 200) {
+
+                            LoginResult result = response.body();
+
+                            AlertDialog.Builder builder1 = new AlertDialog.Builder(Login.this);
+                            builder1.setTitle(result.getName());
+                            builder1.setMessage(result.getEmail());
+
+                            builder1.show();
+                        } else if (response.code() == 404) {
+                            Toast.makeText(Login.this, "Wrong Email/Password", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<LoginResult> call, Throwable t) {
+                        Toast.makeText(Login.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+//
+//                loginUser(edt_login_email.getText().toString(),
+//                        edt_login_password.getText().toString());
 
             }
         });
@@ -105,9 +157,35 @@ public class Login extends AppCompatActivity {
                                     return;
                                 }
 
-                                registerUser(edt_register_email.getText().toString(),
-                                        edt_register_name.getText().toString(),
-                                        edt_register_password.getText().toString());
+
+                                HashMap<String, String> map = new HashMap<>();
+
+                                map.put("name", edt_register_name.getText().toString());
+                                map.put("email", edt_register_email.getText().toString());
+                                map.put("password", edt_register_password.getText().toString());
+
+                                Call<Void> call = retrofitInterface.executeRegister(map);
+
+                                call.enqueue(new Callback<Void>() {
+                                    @Override
+                                    public void onResponse(Call<Void> call, Response<Void> response) {
+
+                                        if(response.code() == 200) {
+                                            Toast.makeText(Login.this, "Login success", Toast.LENGTH_SHORT).show();
+                                        } else if (response.code() == 400) {
+                                            Toast.makeText(Login.this, "Already login", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<Void> call, Throwable t) {
+                                        Toast.makeText(Login.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+//
+//                                registerUser(edt_register_email.getText().toString(),
+//                                        edt_register_name.getText().toString(),
+//                                        edt_register_password.getText().toString());
                             }
                         }).show();
             }
