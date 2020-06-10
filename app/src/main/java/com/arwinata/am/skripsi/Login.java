@@ -1,233 +1,149 @@
 package com.arwinata.am.skripsi;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.functions.Consumer;
-import io.reactivex.schedulers.Schedulers;
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
+import android.widget.EditText;
 import android.widget.Toast;
 
-import com.afollestad.materialdialogs.DialogAction;
-import com.afollestad.materialdialogs.MaterialDialog;
-import com.arwinata.am.skripsi.Retrofit.IMyService;
-import com.arwinata.am.skripsi.Retrofit.LoginResult;
-import com.arwinata.am.skripsi.Retrofit.RetrofitClient;
-import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
-import com.rengwuxian.materialedittext.MaterialEditText;
-
-import java.util.HashMap;
+import com.arwinata.am.skripsi.Retrofit.model.UserResponse;
+import com.arwinata.am.skripsi.Retrofit.model.LoginRequest;
+import com.arwinata.am.skripsi.Retrofit.service.SharedPrefManager;
+import com.arwinata.am.skripsi.Retrofit.service.UserClient;
+import com.arwinata.am.skripsi.bankActivity.BankDashboard;
 
 public class Login extends AppCompatActivity {
 
     private String BASE_URL = "http://192.168.1.70:3000";
 
-    private Retrofit retrofit;
-    private IMyService retrofitInterface;
-    TextView txt_create_account;
-    MaterialEditText edt_login_email, edt_login_password;
-    Button btn_login;
+    //SharedPreference (biar login terus)
+    SharedPrefManager sharedPrefManager;
 
-    CompositeDisposable compositeDisposible = new CompositeDisposable();
-    IMyService iMyService;
-
-    public Login() {
-    }
-
-    @Override
-    protected void onStop(){
-        compositeDisposible.clear();
-        super.onStop();
-    }
+    EditText edt_login_email, edt_login_password;
+    Button btn_login, btnback;
+    String email, password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        //init service
-        retrofit = new Retrofit.Builder()
+//        if (sharedPrefManager.getSPSudahLogin() != false){
+//            if(sharedPrefManager.getSP_level() == 1){
+//                startActivity(new Intent(Login.this, BankDashboard.class)
+//                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
+//                finish();
+//            } else if (sharedPrefManager.getSP_level() == 2){
+//                startActivity(new Intent(Login.this, Dashboard.class)
+//                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
+//                finish();
+//            }
+//        }else {
+
+            //init view
+            edt_login_email = (EditText) findViewById(R.id.edemail_login);
+            edt_login_password = (EditText) findViewById(R.id.edPassword_login);
+            btnback = (Button) findViewById(R.id.btn_backLogin);
+            btn_login = (Button) findViewById(R.id.btnLogin_login);
+
+            btnback.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent i = new Intent(Login.this, MainActivity.class);
+                    startActivity(i);
+                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                    finish();
+                }
+            });
+
+            btn_login.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    email = edt_login_email.getText().toString();
+                    password = edt_login_password.getText().toString();
+                    LoginRequest logreq = new LoginRequest(email, password);
+
+                    loginConnection(logreq);
+                    sharedPrefManager.saveSPBoolean(SharedPrefManager.sp_sudahLogin, true);
+                }
+            });
+        }
+//    }
+
+    private void loginConnection(LoginRequest loginRequest) {
+
+        //membuat okhttp client
+        OkHttpClient.Builder okhttp = new OkHttpClient.Builder();
+
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        okhttp.addInterceptor(logging);
+
+        //membuat instance retrofit
+        Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        retrofitInterface = retrofit.create(IMyService.class);
-        Retrofit retrofitClient = RetrofitClient.getInstance();
-        iMyService = retrofitClient.create(IMyService.class);
+                .client(okhttp.build());
 
-        //init view
-        edt_login_email = (MaterialEditText) findViewById(R.id.edt_email);
-        edt_login_password = (MaterialEditText) findViewById(R.id.edt_password);
-        btn_login = (Button) findViewById(R.id.btn_login);
-        btn_login.setOnClickListener(new View.OnClickListener() {
+        Retrofit retrofit = builder.build();
+
+        //mendapatkan client & memanggil object
+        UserClient client = retrofit.create(UserClient.class);
+        Call<UserResponse> call = client.loginAcount(loginRequest);
+
+        call.enqueue(new Callback<UserResponse>() {
+
             @Override
-            public void onClick(View view) {
+            public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+                if(response.isSuccessful())
+                {
+                    String
+                            idUser = response.body().get_id(),
+                            username = response.body().getName();
+                    int level = response.body().getLevel();
+                    Class nextClass = Dashboard.class;
 
-                HashMap<String, String> map = new HashMap<>();
+                    sharedPrefManager.saveSPString(SharedPrefManager.sp_iduser, idUser);
+                    sharedPrefManager.saveSPBoolean(SharedPrefManager.sp_sudahLogin, true);
+                    sharedPrefManager.saveSPInt(SharedPrefManager.sp_level, level);
 
-                map.put("email", edt_login_email.getText().toString());
-                map.put("password", edt_login_password.getText().toString());
+                    Toast.makeText( Login.this,"Halo " + username, Toast.LENGTH_LONG).show();
 
-                Call<LoginResult> call = retrofitInterface.executeLogin(map);
-
-                call.enqueue(new Callback<LoginResult>() {
-                    @Override
-                    public void onResponse(Call<LoginResult> call, Response<LoginResult> response) {
-
-                        if(response.code() == 200) {
-
-                            LoginResult result = response.body();
-
-                            AlertDialog.Builder builder1 = new AlertDialog.Builder(Login.this);
-                            builder1.setTitle(result.getName());
-                            builder1.setMessage(result.getEmail());
-
-                            builder1.show();
-                        } else if (response.code() == 404) {
-                            Toast.makeText(Login.this, "Wrong Email/Password", Toast.LENGTH_SHORT).show();
-                        }
-
+                    if(level == 1){
+                        nextClass = BankDashboard.class;
+                    } else if (level == 2){
+                        nextClass = Dashboard.class;
                     }
 
-                    @Override
-                    public void onFailure(Call<LoginResult> call, Throwable t) {
-                        Toast.makeText(Login.this, t.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
-//
-//                loginUser(edt_login_email.getText().toString(),
-//                        edt_login_password.getText().toString());
+                    Intent i = new Intent(Login.this, nextClass);
+                    i.putExtra("idUser", idUser);
+                    i.putExtra("username", username);
+                    startActivity(i);
+                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                    finish();
+                } else {
+                    Toast.makeText( Login.this,"Email/password anda salah :(", Toast.LENGTH_LONG).show();
 
+                    edt_login_email.setText("");
+                    edt_login_password.setText("");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserResponse> call, Throwable t) {
+                Toast.makeText(Login.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(Login.this, "Koneksi anda gagal :(", Toast.LENGTH_SHORT).show();
             }
         });
-
-        txt_create_account = (TextView) findViewById(R.id.txt_create_account);
-        txt_create_account.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final View register_layout = LayoutInflater.from(Login.this)
-                        .inflate(R.layout.activity_register, null);
-
-                new MaterialStyledDialog.Builder(Login.this)
-                        .setIcon(R.drawable.ic_account)
-                        .setTitle("REGISTRATION")
-                        .setDescription("Please fill all fields")
-                        .setCustomView(register_layout)
-                        .setNegativeText("CANCEL")
-                        .onNegative(new MaterialDialog.SingleButtonCallback() {
-                            @Override
-                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                dialog.dismiss();
-                            }
-                        })
-                        .setPositiveText("REGISTER")
-                        .onPositive(new MaterialDialog.SingleButtonCallback() {
-                            @Override
-                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-
-                                MaterialEditText edt_register_email = (MaterialEditText) register_layout.findViewById(R.id.edt_email);
-                                MaterialEditText edt_register_name = (MaterialEditText) register_layout.findViewById(R.id.edt_name);
-                                MaterialEditText edt_register_password = (MaterialEditText) register_layout.findViewById(R.id.edt_password);
-
-                                if(TextUtils.isEmpty(edt_register_email.getText().toString()))
-                                {
-                                    Toast.makeText(Login.this, "Email cannot be null or empty", Toast.LENGTH_SHORT).show();
-                                    return;
-                                }
-                                if(TextUtils.isEmpty(edt_register_name.getText().toString()))
-                                {
-                                    Toast.makeText(Login.this, "Name cannot be null or empty", Toast.LENGTH_SHORT).show();
-                                    return;
-                                }
-                                if(TextUtils.isEmpty(edt_register_password.getText().toString()))
-                                {
-                                    Toast.makeText(Login.this, "Password cannot be null or empty", Toast.LENGTH_SHORT).show();
-                                    return;
-                                }
-
-
-                                HashMap<String, String> map = new HashMap<>();
-
-                                map.put("name", edt_register_name.getText().toString());
-                                map.put("email", edt_register_email.getText().toString());
-                                map.put("password", edt_register_password.getText().toString());
-
-                                Call<Void> call = retrofitInterface.executeRegister(map);
-
-                                call.enqueue(new Callback<Void>() {
-                                    @Override
-                                    public void onResponse(Call<Void> call, Response<Void> response) {
-
-                                        if(response.code() == 200) {
-                                            Toast.makeText(Login.this, "Login success", Toast.LENGTH_SHORT).show();
-                                        } else if (response.code() == 400) {
-                                            Toast.makeText(Login.this, "Already login", Toast.LENGTH_SHORT).show();
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onFailure(Call<Void> call, Throwable t) {
-                                        Toast.makeText(Login.this, t.getMessage(), Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-//
-//                                registerUser(edt_register_email.getText().toString(),
-//                                        edt_register_name.getText().toString(),
-//                                        edt_register_password.getText().toString());
-                            }
-                        }).show();
-            }
-        });
-    }
-
-    private void registerUser(String email, String name, String password)
-    {
-        compositeDisposible.add(iMyService.registerUser(email, name, password)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<String>() {
-                    @Override
-                    public void accept(String response) throws Exception {
-                        Toast.makeText(Login.this, ""+response, Toast.LENGTH_SHORT).show();
-                    }
-                })
-        );
-    }
-
-    private void loginUser(String email, String password){
-        if(TextUtils.isEmpty(email))
-        {
-            Toast.makeText(this, "Email cannot be null or empty", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        if(TextUtils.isEmpty(password))
-        {
-            Toast.makeText(this, "Password cannot be null or empty", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        compositeDisposible.add(iMyService.loginUser(email, password)
-        .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<String>() {
-                    @Override
-                    public void accept(String response) throws Exception {
-                        Toast.makeText(Login.this, ""+response, Toast.LENGTH_SHORT).show();
-                    }
-                })
-        );
     }
 }

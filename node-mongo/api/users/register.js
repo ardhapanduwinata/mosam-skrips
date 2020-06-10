@@ -15,6 +15,7 @@ router.get("/", (req, res, next) => {
                         email: doc.email,
                         name: doc.name,
                         password: doc.password,
+                        level: doc.level,
                         id: doc._id
                     }
                 })
@@ -34,21 +35,30 @@ router.post("/", (req, res, next) => {
         _id: new mongooose.Types.ObjectId(),
         email: req.body.email,
         name: req.body.name,
-        password: req.body.password
+        password: req.body.password,
+        level: req.body.level
     });
-    user
-        .save()
+    User.findOne({
+            email: req.body.email
+        })
+        .exec()
         .then(result => {
             console.log(result);
-            res.status(201).json({
-                message: "Created user success",
-                createdProduct: {
-                    email: result.email,
-                    name: result.name,
-                    password: result.password,
-                    _id: result._id
-                },
-            });
+            if (!result) {
+                user.save()
+                    .then(result => {
+                        res.status(201).json({
+                            email: result.email,
+                            name: result.name,
+                            id_: result._id,
+                            level: result.level
+                        })
+                    })
+            } else {
+                res.json({
+                    message: "Email telah dipakai! Silahkan menggunakan email lain"
+                })
+            }
         })
         .catch((err) => {
             console.log(err);
@@ -58,7 +68,7 @@ router.post("/", (req, res, next) => {
         });
 });
 
-router.delete("/idUser", (req, res, next) => {
+router.delete("/:idUser", (req, res, next) => {
     const id = req.params.idUser;
     User.deleteOne({
             _id: id

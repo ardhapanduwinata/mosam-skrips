@@ -1,87 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:weightSum="4"
     tools:context=".Login">
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_weight="2"
+    <ImageView
+        android:id="@+id/bgImage_main"
         android:layout_width="match_parent"
-        android:layout_height="0dp">
+        android:layout_height="match_parent"
+        android:background="@drawable/wallpaper10"
+        android:scaleType="fitXY">
+    </ImageView>
 
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <ImageView
-                android:src="@drawable/wallpaper"
-                android:scaleType="fitXY"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-            </ImageView>
-
-            <TextView
-                android:id="@+id/txt_create_account"
-                android:layout_width="wrap_content"
-                android:text="+ CREATE ACCOUNT"
-                android:textStyle="bold"
-                android:textColor="@color/white"
-                android:layout_margin="16dp"
-                android:layout_height="wrap_content">
-
-            </TextView>
-        </FrameLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/tvlogin"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:orientation="vertical"
-        android:layout_margin="16dp"
-        android:padding="16dp">
+        android:text="Login"
+        android:textColor="@color/white"
+        android:textSize="70sp"
+        android:fontFamily="@font/jesselyne"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="90dp">
+    </TextView>
 
-        <com.rengwuxian.materialedittext.MaterialEditText
-            android:id="@+id/edt_email"
-            android:hint="Email"
-            android:inputType="textEmailAddress"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:met_textColorHint="@color/myTextColor"
-            app:met_baseColor="@color/myTextColor"
-            app:met_primaryColor="@color/myTextColor"
-            app:met_iconPadding="0dp"
-            app:met_iconRight="@drawable/ic_email">
-        </com.rengwuxian.materialedittext.MaterialEditText>
+    <TextView
+        android:id="@+id/tvemail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Email"
+        android:textSize="15sp"
+        android:layout_below="@id/tvlogin"
+        android:layout_marginTop="150dp"
+        android:paddingLeft="50dp"
+        android:textColor="@color/white">
+    </TextView>
 
-        <com.rengwuxian.materialedittext.MaterialEditText
-            android:id="@+id/edt_password"
-            android:hint="Password"
-            android:inputType="textPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:met_textColorHint="@color/myTextColor"
-            app:met_baseColor="@color/myTextColor"
-            app:met_primaryColor="@color/myTextColor"
-            app:met_iconPadding="0dp"
-            app:met_iconRight="@drawable/ic_lock">
-        </com.rengwuxian.materialedittext.MaterialEditText>
-    </LinearLayout>
+    <EditText
+        android:id="@+id/edemail_login"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:layout_below="@id/tvemail"
+        android:textSize="15dp"
+        android:inputType="textEmailAddress"
+        android:layout_marginTop="5dp"
+        android:layout_centerHorizontal="true">
+    </EditText>
+
+    <TextView
+        android:id="@+id/tvpassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Password"
+        android:textSize="15sp"
+        android:layout_below="@id/edemail_login"
+        android:paddingLeft="50dp"
+        android:textColor="@color/white">
+    </TextView>
+
+    <EditText
+        android:id="@+id/edPassword_login"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:layout_below="@id/tvpassword"
+        android:textSize="15dp"
+        android:inputType="textPassword"
+        android:layout_marginTop="5dp"
+        android:layout_centerHorizontal="true">
+    </EditText>
 
     <Button
-        android:id="@+id/btn_login"
-        android:layout_margin="16dp"
-        android:background="#431F63"
-        android:text="LOGIN"
-        android:textSize="20sp"
+        android:id="@+id/button_ForgotPass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Forgot your Password?"
         android:textColor="@color/white"
-        style="@style/Widget.AppCompat.Button.Borderless.Colored"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:textStyle="bold"
+        android:textSize="10sp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="50dp"
+        android:fontFamily="sans-serif-light"
+        android:layout_below="@id/edPassword_login"
+        android:background="@color/transparent"
+        >
     </Button>
-</LinearLayout>
+
+    <Button
+        android:id="@+id/btnLogin_login"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/button_ForgotPass"
+        android:layout_centerHorizontal="true"
+        android:text="LOGIN"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:background="@drawable/button_bg_transparent">
+    </Button>
+
+    <Button
+        android:id="@+id/btn_backLogin"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="30dp"
+        android:text="&lt; Back"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:background="@color/transparent">
+    </Button>
+
+</RelativeLayout>

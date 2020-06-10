@@ -2,21 +2,27 @@ const mongoose = require('mongoose');
 
 const userSchema = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
-    email: {
+    idUser: {
         type: String,
         required: true,
     },
-    name: {
+    idBank: {
         type: String,
         required: true,
     },
-    password: {
+    date: {
         type: String,
         required: true
     },
-    level: {
+    jumlahBbesar: {
         type: Number
     },
+    jumlahBsedang: {
+        type: Number
+    },
+    jumlahBkecil: {
+        type: Number
+    }
 });
 
-module.exports = mongoose.model('Users', userSchema);
+module.exports = mongoose.model('transaksiNabung', userSchema);
