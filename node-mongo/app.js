@@ -6,9 +6,10 @@ const mongoose = require("mongoose");
 // const multer = require("multer");
 // const upload = multer();
 
-const productRoutes = require("./api/routes/products");
-const orderRoutes = require("./api/routes/orders");
-const nyobaRoutes = require("./api/routes/nyoba")
+const productRoutes = require("./api/products/products");
+const orderRoutes = require("./api/orders/orders");
+const loginRoutes = require("./api/users/login");
+const registerRoutes = require("./api/users/register");
 
 mongoose.connect(
     "mongodb+srv://root:" +
@@ -44,6 +45,8 @@ app.use((req, res, next) => {
 
 app.use("/products", productRoutes);
 app.use("/orders", orderRoutes);
+app.use("/login", loginRoutes);
+app.use("/register", registerRoutes);
 
 app.use((req, res, next) => {
     const error = new Error("Not Found");

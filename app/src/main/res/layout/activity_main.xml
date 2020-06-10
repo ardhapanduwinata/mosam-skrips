@@ -1,206 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:clipChildren="false">
+    tools:context=".MainActivity">
+
+    <ImageView
+        android:id="@+id/bgImage_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/wallpaper10"
+        android:scaleType="fitXY">
+    </ImageView>
 
     <TextView
-        android:id="@+id/tvMosam"
+        android:id="@+id/tvHelloThere"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Mosam"
-        android:textSize="25dp"
-        android:layout_marginTop="20dp"
+        android:text="Hello There!"
+        android:textColor="@color/white"
+        android:textSize="70sp"
+        android:fontFamily="@font/jesselyne"
         android:layout_marginLeft="20dp"
-        android:textColor="@color/black"/>
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="90dp">
+    </TextView>
+
+    <TextView
+        android:id="@+id/tvnicetoseeuagain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nice to see you again~"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:textSize="15sp"
+        android:fontFamily="@font/jesselyne"
+        android:paddingLeft="20dp"
+        android:layout_below="@id/tvHelloThere">
+    </TextView>
 
     <Button
-        android:id="@+id/buttonNotif"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="20dp"
-        android:background="@drawable/notification">
+        android:id="@+id/buttonLogin_main"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvnicetoseeuagain"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="22dp"
+        android:text="LOGIN"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:background="@drawable/button_bg_transparent">
     </Button>
 
-    <ImageView
-        android:id="@+id/imgUser_main"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:background="@drawable/account"
-        android:layout_below="@+id/tvMosam"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="20dp">
-    </ImageView>
-
     <TextView
-        android:id="@+id/tvNamaUser_main"
+        android:id="@+id/tvdonthaveaccount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/imgUser_main"
-        android:layout_below="@+id/tvMosam"
-        android:layout_marginTop="35dp"
-        android:layout_marginLeft="20dp"
-        android:text="Hallo, Username Pengguna"
-        android:textSize="15sp">
-    </TextView>
-
-    <ImageView
-        android:id="@+id/ivNabungFull"
-        android:layout_width="match_parent"
-        android:layout_height="260dp"
-        android:background="@drawable/roundbg"
-        android:layout_below="@+id/imgUser_main"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp">
-    </ImageView>
-
-    <TextView
-        android:id="@+id/tvTabunganBotol"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Tabungan Botol anda:"
-        android:layout_below="@+id/imgUser_main"
-        android:layout_marginTop="25dp"
-        android:layout_marginLeft="30dp"
-        android:textSize="15sp">
-    </TextView>
-    <TextView
-        android:id="@+id/tv15l"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tvTabunganBotol"
-        android:layout_marginLeft="55dp"
-        android:text="1,5 L"
+        android:text="You don't have account?"
+        android:textColor="@color/white"
         android:textSize="15sp"
-        android:paddingTop="10dp">
-    </TextView>
-    <ImageView
-        android:id="@+id/iv15l"
-        android:layout_width="140dp"
-        android:layout_height="150dp"
-        android:background="@drawable/botolbesar"
-        android:layout_below="@+id/tv15l"
-        android:layout_marginTop="10dp"/>
-
-    <TextView
-        android:id="@+id/tv600ml"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv15l"
-        android:layout_toRightOf="@+id/tv15l"
-        android:layout_marginLeft="50dp"
-        android:text="600 ml"
-        android:textSize="15sp"
-        android:paddingTop="20dp">
-    </TextView>
-    <ImageView
-        android:id="@+id/iv600ml"
-        android:layout_width="120dp"
-        android:layout_height="110dp"
-        android:background="@drawable/botolsedang"
-        android:layout_below="@+id/tv600ml"
-        android:layout_toRightOf="@+id/iv15l"
-        android:layout_marginLeft="-40dp"
-        android:layout_marginTop="10dp"/>
-
-    <TextView
-        android:id="@+id/tv300ml"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv600ml"
-        android:layout_toRightOf="@+id/tv600ml"
-        android:layout_marginLeft="28dp"
-        android:text="300 ml"
-        android:textSize="15sp"
-        android:paddingTop="20dp">
-    </TextView>
-
-    <ImageView
-        android:id="@+id/iv300ml"
-        android:layout_width="70dp"
-        android:layout_height="60dp"
-        android:background="@drawable/gelas"
-        android:layout_below="@+id/tv300ml"
-        android:layout_toRightOf="@+id/iv600ml"
-        android:layout_marginLeft="-20dp"
-        android:layout_marginTop="15dp"/>
-    <TextView
-        android:id="@+id/tvJml15l"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/iv15l"
-        android:text="1000"
-        android:layout_alignLeft="@+id/ivNabungFull"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="10dp">
-    </TextView>
-
-    <TextView
-        android:id="@+id/tvJml600ml"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/iv600ml"
-        android:text="1000"
-        android:layout_alignLeft="@+id/tvJml15l"
-        android:layout_marginLeft="95dp"
-        android:layout_marginTop="10dp">
-    </TextView>
-
-    <TextView
-        android:id="@+id/tvtvJml300ml"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/iv300ml"
-        android:text="1000"
-        android:layout_alignLeft="@+id/tvJml600ml"
-        android:layout_marginLeft="73dp"
-        android:layout_marginTop="15dp">
-    </TextView>
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="260dp"
-        android:layout_alignTop="@+id/ivNabungFull"
-        android:clipChildren="false">
-
-        <Button
-            android:id="@+id/buttonNabung"
-            android:layout_width="110dp"
-            android:layout_height="match_parent"
-            android:background="@drawable/halfrounded"
-            android:layout_centerInParent="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="20dp"
-            android:text="Nabung Yuk!"
-            android:textSize="20sp"
-            android:textAllCaps="false">
-        </Button>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Klik disini untuk menabung*"
-            android:layout_alignParentRight="true"
-            android:layout_centerInParent="true">
-        </TextView>
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:fontFamily="sans-serif-light"
+        android:paddingLeft="20dp"
         android:layout_alignParentBottom="true"
-        android:background="@color/colorPrimary">
+        android:layout_marginBottom="50dp"
+        >
+    </TextView>
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-        </ImageView>
-    </RelativeLayout>
+    <Button
+        android:id="@+id/buttonRegister_main"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Register Here"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:textSize="12sp"
+        android:fontFamily="sans-serif-light"
+        android:paddingLeft="7dp"
+        android:layout_toRightOf="@id/tvdonthaveaccount"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="35dp"
+        android:background="@color/transparent"
+        >
+    </Button>
 
 </RelativeLayout>
