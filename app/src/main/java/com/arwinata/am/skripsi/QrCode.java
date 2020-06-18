@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.arwinata.am.skripsi.Retrofit.service.SharedPrefManager;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
@@ -19,20 +20,19 @@ public class QrCode extends AppCompatActivity {
 
     ImageView qrcode;
     Button back;
-    String idUser;
+    SharedPrefManager sharedPrefManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qr_code);
+        sharedPrefManager = new SharedPrefManager(this);
 
         qrcode = findViewById(R.id.ivQrcode);
         back = findViewById(R.id.btn_backQr);
 
-        Intent i = getIntent();
-        idUser = i.getStringExtra("idUser");
+        String text = sharedPrefManager.getSP_iduser(); // Whatever you need to encode in the QR code
 
-        String text = idUser; // Whatever you need to encode in the QR code
         MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
         try {
             BitMatrix bitMatrix = multiFormatWriter.encode(text, BarcodeFormat.QR_CODE,200,200);

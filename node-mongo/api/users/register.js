@@ -48,10 +48,11 @@ router.post("/", (req, res, next) => {
                 user.save()
                     .then(result => {
                         res.status(201).json({
+                            message: "Anda berhasil terdaftar, silahkan login terlebih dahulu",
                             email: result.email,
                             name: result.name,
-                            id_: result._id,
-                            level: result.level
+                            _id: result._id,
+                            level: result.level,
                         })
                     })
             } else {

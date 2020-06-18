@@ -17,15 +17,16 @@
         android:layout_marginLeft="20dp"
         android:textColor="@color/black"/>
 
-    <TextView
-        android:id="@+id/buttonLogout_dashbank"
+    <Button
+        android:id="@+id/buttonLogout_dash"
         android:layout_width="wrap_content"
         android:layout_height="35dp"
         android:layout_alignParentRight="true"
         android:layout_marginTop="20dp"
         android:layout_marginRight="20dp"
+        android:background="@color/white"
         android:text="Logout">
-    </TextView>
+    </Button>
 
     <ImageView
         android:id="@+id/imgUser_main"
@@ -131,33 +132,36 @@
         android:layout_marginLeft="-20dp"
         android:layout_marginTop="15dp"/>
     <TextView
+        android:textAlignment="center"
         android:id="@+id/tvJml15l"
-        android:layout_width="wrap_content"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/iv15l"
-        android:text="1000"
+        android:text="1"
         android:layout_alignLeft="@+id/ivNabungFull"
-        android:layout_marginLeft="30dp"
+        android:layout_marginLeft="28dp"
         android:layout_marginTop="10dp">
     </TextView>
 
     <TextView
+        android:textAlignment="center"
         android:id="@+id/tvJml600ml"
-        android:layout_width="wrap_content"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/iv600ml"
-        android:text="1000"
+        android:text="1"
         android:layout_alignLeft="@+id/tvJml15l"
-        android:layout_marginLeft="83dp"
+        android:layout_marginLeft="78dp"
         android:layout_marginTop="10dp">
     </TextView>
 
     <TextView
+        android:textAlignment="center"
         android:id="@+id/tvtvJml300ml"
-        android:layout_width="wrap_content"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/iv300ml"
-        android:text="1000"
+        android:text="1"
         android:layout_alignLeft="@+id/tvJml600ml"
         android:layout_marginLeft="73dp"
         android:layout_marginTop="15dp">
@@ -198,7 +202,7 @@
             android:background="@drawable/home"/>
 
         <ImageView
-            android:id="@+id/ivBus"
+            android:id="@+id/ivBusDash"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_centerVertical="true"
@@ -207,16 +211,16 @@
             android:layout_toRightOf="@id/ivHome"/>
 
         <ImageView
-            android:id="@+id/ivMisi"
+            android:id="@+id/ivMisiDash"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_centerVertical="true"
             android:layout_marginRight="55dp"
-            android:layout_toLeftOf="@+id/ivSetting"
+            android:layout_toLeftOf="@+id/ivSettingDash"
             android:background="@drawable/mission"/>
 
         <ImageView
-            android:id="@+id/ivSetting"
+            android:id="@+id/ivSettingDash"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_centerVertical="true"

@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.arwinata.am.skripsi.Retrofit.model.TabunganResponse;
 import com.arwinata.am.skripsi.Retrofit.model.UserResponse;
 import com.arwinata.am.skripsi.Retrofit.model.LoginRequest;
 import com.arwinata.am.skripsi.Retrofit.service.SharedPrefManager;
@@ -37,18 +38,7 @@ public class Login extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-//        if (sharedPrefManager.getSPSudahLogin() != false){
-//            if(sharedPrefManager.getSP_level() == 1){
-//                startActivity(new Intent(Login.this, BankDashboard.class)
-//                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
-//                finish();
-//            } else if (sharedPrefManager.getSP_level() == 2){
-//                startActivity(new Intent(Login.this, Dashboard.class)
-//                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
-//                finish();
-//            }
-//        }else {
+        sharedPrefManager = new SharedPrefManager(this);
 
             //init view
             edt_login_email = (EditText) findViewById(R.id.edemail_login);
@@ -74,11 +64,9 @@ public class Login extends AppCompatActivity {
                     LoginRequest logreq = new LoginRequest(email, password);
 
                     loginConnection(logreq);
-                    sharedPrefManager.saveSPBoolean(SharedPrefManager.sp_sudahLogin, true);
                 }
             });
-        }
-//    }
+    }
 
     private void loginConnection(LoginRequest loginRequest) {
 
@@ -110,18 +98,19 @@ public class Login extends AppCompatActivity {
                     String
                             idUser = response.body().get_id(),
                             username = response.body().getName();
-                    int level = response.body().getLevel();
-                    Class nextClass = Dashboard.class;
+                    String level = response.body().getLevel();
 
                     sharedPrefManager.saveSPString(SharedPrefManager.sp_iduser, idUser);
+                    sharedPrefManager.saveSPString(SharedPrefManager.sp_namauser, username);
                     sharedPrefManager.saveSPBoolean(SharedPrefManager.sp_sudahLogin, true);
-                    sharedPrefManager.saveSPInt(SharedPrefManager.sp_level, level);
+                    sharedPrefManager.saveSPString(SharedPrefManager.sp_level, level);
+                    Class nextClass = Dashboard.class;
 
                     Toast.makeText( Login.this,"Halo " + username, Toast.LENGTH_LONG).show();
 
-                    if(level == 1){
+                    if(level.equals("satu")){
                         nextClass = BankDashboard.class;
-                    } else if (level == 2){
+                    } else if (level.equals("dua")){
                         nextClass = Dashboard.class;
                     }
 

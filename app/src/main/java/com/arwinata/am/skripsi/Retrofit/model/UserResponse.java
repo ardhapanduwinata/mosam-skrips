@@ -17,9 +17,9 @@ public class UserResponse {
 	private String _id;
 
 	@SerializedName("level")
-	private int level;
+	private String level;
 
-	public int getLevel() {	return level;}
+	public String getLevel() {	return level;}
 
 	public String getName(){
 		return name;

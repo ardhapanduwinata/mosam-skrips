@@ -11,12 +11,26 @@ public class User{
 	private String name;
 
 	@SerializedName("level")
-	private int level;
+	private String level;
 
 	@SerializedName("email")
 	private String email;
 
-    public User(String email, String name, String password, int level) {
+	@SerializedName("message")
+	private String message;
+
+	@SerializedName("_id")
+	private String _id;
+
+	public String get_id() {
+		return _id;
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public User(String email, String name, String password, String level) {
         this.password = password;
         this.name = name;
         this.level = level;
@@ -30,4 +44,6 @@ public class User{
 	public String getEmail() {
 		return email;
 	}
+
+	public String getLevel() {return level;}
 }
