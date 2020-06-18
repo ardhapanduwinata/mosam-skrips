@@ -15,7 +15,7 @@ const userSchema = mongoose.Schema({
         required: true
     },
     level: {
-        type: Number
+        type: String
     },
 });
 

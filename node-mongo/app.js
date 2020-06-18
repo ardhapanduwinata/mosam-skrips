@@ -10,6 +10,8 @@ const productRoutes = require("./api/products/products");
 const orderRoutes = require("./api/orders/orders");
 const loginRoutes = require("./api/users/login");
 const registerRoutes = require("./api/users/register");
+const updateProfile = require("./api/users/updateProfile");
+const tabungan = require("./api/tabungan/tabungan");
 
 mongoose.connect(
     "mongodb+srv://root:" +
@@ -47,6 +49,8 @@ app.use("/products", productRoutes);
 app.use("/orders", orderRoutes);
 app.use("/login", loginRoutes);
 app.use("/register", registerRoutes);
+app.use("/updateProfile", updateProfile);
+app.use("/tabungan", tabungan);
 
 app.use((req, res, next) => {
     const error = new Error("Not Found");
