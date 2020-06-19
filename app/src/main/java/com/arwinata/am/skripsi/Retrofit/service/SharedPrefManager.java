@@ -8,7 +8,8 @@ public class SharedPrefManager {
 
     public static final String sp_iduser = "spIDuser";
     public static final String sp_level = "spLevel";
-    public static final String sp_namauser = "spNamaUser";
+    public static final String sp_namauser = "spnamauser";
+    public static final String sp_idbank = "spNamaUser";
 
     public static final String sp_sudahLogin = "spSudahLogin";
 
@@ -39,7 +40,9 @@ public class SharedPrefManager {
         return sp.getString(sp_iduser, "");
     }
 
-    public String getSP_namauser() {return sp.getString(sp_namauser, "");}
+    public String getSP_namauser(){ return sp.getString(sp_namauser, ""); }
+
+    public String getSP_idbank() {return sp.getString(sp_idbank, "");}
 
     public String getSP_level(){ return sp.getString(sp_level, ""); }
 
