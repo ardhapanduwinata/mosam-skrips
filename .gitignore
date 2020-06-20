@@ -12,3 +12,12 @@
 /captures
 .externalNativeBuild
 .cxx
+
+## Directory-based project format:
+.idea/
+
+# IntelliJ
+/out/
+
+# Android Studio Navigation editor temp files
+.navigation/
