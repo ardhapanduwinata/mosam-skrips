@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.arwinata.am.skripsi.Retrofit.service.SharedPrefManager;
+import com.arwinata.am.skripsi.shared_preference.SharedPrefManager;
 import com.arwinata.am.skripsi.bankActivity.BankDashboard;
 
 public class MainActivity extends AppCompatActivity {

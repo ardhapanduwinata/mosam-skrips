@@ -1,6 +1,7 @@
 package com.arwinata.am.skripsi;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
@@ -13,16 +14,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.arwinata.am.skripsi.Retrofit.model.EditProfileReq;
-import com.arwinata.am.skripsi.Retrofit.model.User;
-import com.arwinata.am.skripsi.Retrofit.model.UserResponse;
-import com.arwinata.am.skripsi.Retrofit.service.SharedPrefManager;
+import com.arwinata.am.skripsi.model.EditProfileReq;
+import com.arwinata.am.skripsi.model.UserResponse;
+import com.arwinata.am.skripsi.shared_preference.SharedPrefManager;
 import com.arwinata.am.skripsi.Retrofit.service.UserClient;
 
 public class UserSetting extends AppCompatActivity {
@@ -79,8 +78,8 @@ public class UserSetting extends AppCompatActivity {
         update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(clicked.equals("yes")){
-                    if(edtpass.getText().toString().equals(edtreinputpass.getText().toString())){
+                if (clicked.equals("yes")) {
+                    if (edtpass.getText().toString().equals(edtreinputpass.getText().toString())) {
                         edtpass.setEnabled(false);
                         edtreinputpass.setVisibility(View.INVISIBLE);
                         tvreinputpass.setVisibility(View.INVISIBLE);
@@ -89,26 +88,25 @@ public class UserSetting extends AppCompatActivity {
                         email = edtemail.getText().toString();
                         id = sharedPrefManager.getSP_iduser();
 
-                        EditProfileReq edtprofile = new EditProfileReq(username, email,newpass);
-                        updateConnection(id ,edtprofile);
+                        EditProfileReq edtprofile = new EditProfileReq(username, email, newpass);
+                        updateConnection(id, edtprofile);
                     } else {
-                        Toast.makeText( UserSetting.this,"Pastikan password yang anda ulang sama!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(UserSetting.this, "Pastikan password yang anda ulang sama!", Toast.LENGTH_LONG).show();
                         edtreinputpass.setText("");
                     }
-                }else if(clicked.equals("no")){
+                } else if (clicked.equals("no")) {
                     username = edtusername.getText().toString();
                     email = edtemail.getText().toString();
                     id = sharedPrefManager.getSP_iduser();
                     EditProfileReq edtprofile = new EditProfileReq(username, email);
 
-                    updateConnection(id ,edtprofile);
+                    updateConnection(id, edtprofile);
                 }
             }
         });
     }
 
-    public void updateConnection(String id,EditProfileReq edtprofile)
-    {
+    public void updateConnection(String id, EditProfileReq edtprofile) {
         //membuat okhttp client
         String BASE_URL = "http://192.168.1.70:3000";
         OkHttpClient.Builder okhttp = new OkHttpClient.Builder();
@@ -132,14 +130,13 @@ public class UserSetting extends AppCompatActivity {
         call.enqueue(new Callback<UserResponse>() {
             @Override
             public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
-                if(response.body().getEmail() == null)
-                {
-                    Toast.makeText( UserSetting.this,"Email Telah digunakan pengguna lain!", Toast.LENGTH_LONG).show();
+                if (response.body().getEmail() == null) {
+                    Toast.makeText(UserSetting.this, "Email Telah digunakan pengguna lain!", Toast.LENGTH_LONG).show();
 
                     edtusername.setText(usernamelama);
                     edtemail.setText(emaillama);
                 } else {
-                    Toast.makeText( UserSetting.this,"Data berhasil diubah", Toast.LENGTH_LONG).show();
+                    Toast.makeText(UserSetting.this, "Data berhasil diubah", Toast.LENGTH_LONG).show();
 
                     String newname, newemail;
 
@@ -153,13 +150,12 @@ public class UserSetting extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<UserResponse> call, Throwable t) {
-                Toast.makeText( UserSetting.this,"Terjadi kesalahan, profile tidak terupdate :(", Toast.LENGTH_LONG).show();
+                Toast.makeText(UserSetting.this, "Terjadi kesalahan, profile tidak terupdate :(", Toast.LENGTH_LONG).show();
             }
         });
     }
 
-    public void cekuser(String idUser, final Context context)
-    {
+    public void cekuser(String idUser, final Context context) {
         OkHttpClient.Builder okhttp = new OkHttpClient.Builder();
 
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
@@ -180,8 +176,7 @@ public class UserSetting extends AppCompatActivity {
 
             @Override
             public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
-                if(response.isSuccessful())
-                {
+                if (response.isSuccessful()) {
                     edtusername.setText(response.body().getName());
                     edtemail.setText(response.body().getEmail());
                     edtpass.setText("password");
@@ -189,7 +184,7 @@ public class UserSetting extends AppCompatActivity {
                     usernamelama = response.body().getName();
                     emaillama = response.body().getEmail();
                 } else {
-                    Toast.makeText( context,"Terjadi kesalahan :(", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, "Terjadi kesalahan :(", Toast.LENGTH_LONG).show();
                 }
             }
 

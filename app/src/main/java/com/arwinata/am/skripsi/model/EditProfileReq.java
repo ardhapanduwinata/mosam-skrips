@@ -1,4 +1,4 @@
-package com.arwinata.am.skripsi.Retrofit.model;
+package com.arwinata.am.skripsi.model;
 
 public class EditProfileReq {
     public String email, name, password;

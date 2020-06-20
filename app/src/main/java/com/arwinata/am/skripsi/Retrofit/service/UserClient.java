@@ -1,10 +1,10 @@
 package com.arwinata.am.skripsi.Retrofit.service;
 
-import com.arwinata.am.skripsi.Retrofit.model.EditProfileReq;
-import com.arwinata.am.skripsi.Retrofit.model.TabunganResponse;
-import com.arwinata.am.skripsi.Retrofit.model.UserResponse;
-import com.arwinata.am.skripsi.Retrofit.model.User;
-import com.arwinata.am.skripsi.Retrofit.model.LoginRequest;
+import com.arwinata.am.skripsi.model.EditProfileReq;
+import com.arwinata.am.skripsi.model.TabunganResponse;
+import com.arwinata.am.skripsi.model.UserResponse;
+import com.arwinata.am.skripsi.model.User;
+import com.arwinata.am.skripsi.model.LoginRequest;
 
 import retrofit2.Call;
 import retrofit2.http.Body;

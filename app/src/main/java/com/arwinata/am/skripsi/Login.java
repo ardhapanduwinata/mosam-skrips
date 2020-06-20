@@ -16,10 +16,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.arwinata.am.skripsi.Retrofit.model.TabunganResponse;
-import com.arwinata.am.skripsi.Retrofit.model.UserResponse;
-import com.arwinata.am.skripsi.Retrofit.model.LoginRequest;
-import com.arwinata.am.skripsi.Retrofit.service.SharedPrefManager;
+import com.arwinata.am.skripsi.model.UserResponse;
+import com.arwinata.am.skripsi.model.LoginRequest;
+import com.arwinata.am.skripsi.shared_preference.SharedPrefManager;
 import com.arwinata.am.skripsi.Retrofit.service.UserClient;
 import com.arwinata.am.skripsi.bankActivity.BankDashboard;
 

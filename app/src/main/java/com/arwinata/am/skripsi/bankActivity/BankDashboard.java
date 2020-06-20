@@ -19,17 +19,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.arwinata.am.skripsi.Dashboard;
 import com.arwinata.am.skripsi.Login;
-import com.arwinata.am.skripsi.MainActivity;
 import com.arwinata.am.skripsi.R;
-import com.arwinata.am.skripsi.Retrofit.model.TabunganResponse;
-import com.arwinata.am.skripsi.Retrofit.model.UserResponse;
-import com.arwinata.am.skripsi.Retrofit.service.SharedPrefManager;
+import com.arwinata.am.skripsi.model.TabunganResponse;
+import com.arwinata.am.skripsi.model.UserResponse;
+import com.arwinata.am.skripsi.shared_preference.SharedPrefManager;
 import com.arwinata.am.skripsi.Retrofit.service.UserClient;
 import com.arwinata.am.skripsi.UserSetting;
-
-import org.w3c.dom.Text;
 
 public class BankDashboard extends AppCompatActivity {
 

@@ -18,10 +18,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.arwinata.am.skripsi.Retrofit.CheckingConnection;
-import com.arwinata.am.skripsi.Retrofit.model.TabunganResponse;
-import com.arwinata.am.skripsi.Retrofit.model.UserResponse;
-import com.arwinata.am.skripsi.Retrofit.service.SharedPrefManager;
+import com.arwinata.am.skripsi.model.TabunganResponse;
+import com.arwinata.am.skripsi.model.UserResponse;
+import com.arwinata.am.skripsi.shared_preference.SharedPrefManager;
 import com.arwinata.am.skripsi.Retrofit.service.UserClient;
 
 public class Dashboard extends AppCompatActivity{
