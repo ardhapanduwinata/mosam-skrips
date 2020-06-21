@@ -19,9 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.arwinata.am.skripsi.Dashboard;
 import com.arwinata.am.skripsi.Login;
-import com.arwinata.am.skripsi.MainActivity;
 import com.arwinata.am.skripsi.R;
 import com.arwinata.am.skripsi.Retrofit.model.TabunganResponse;
 import com.arwinata.am.skripsi.Retrofit.model.UserResponse;
@@ -29,11 +27,9 @@ import com.arwinata.am.skripsi.Retrofit.service.SharedPrefManager;
 import com.arwinata.am.skripsi.Retrofit.service.UserClient;
 import com.arwinata.am.skripsi.UserSetting;
 
-import org.w3c.dom.Text;
-
 public class BankDashboard extends AppCompatActivity {
 
-    Button logout;
+    Button logout, btnterimatabungan;
     ImageView setting;
     SharedPrefManager sharedPrefManager;
     String iduser, namauser;
@@ -46,7 +42,7 @@ public class BankDashboard extends AppCompatActivity {
         setContentView(R.layout.activity_bank_dashboard);
         sharedPrefManager = new SharedPrefManager(this);
 
-        iduser = sharedPrefManager.getSP_iduser();
+        iduser = sharedPrefManager.getSP_idbank();
 
         cekuser(iduser, this);
         cektabungan(iduser, this);
@@ -57,6 +53,14 @@ public class BankDashboard extends AppCompatActivity {
         tvjmlbotolB = findViewById(R.id.tvJml600ml);
         tvjmlgelas = findViewById(R.id.tvtvJml300ml);
         setting = findViewById(R.id.ivSetting);
+        btnterimatabungan = findViewById(R.id.btnTerimaNabung);
+
+        btnterimatabungan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(BankDashboard.this, QrCodeScanner.class));
+            }
+        });
 
         logout.setOnClickListener(new View.OnClickListener() {
             @Override

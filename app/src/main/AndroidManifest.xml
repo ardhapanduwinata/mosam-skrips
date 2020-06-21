@@ -3,6 +3,7 @@
     package="com.arwinata.am.skripsi">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA"/>
 
     <application
         android:allowBackup="true"
@@ -12,7 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".UserSetting"></activity>
+        <activity android:name=".bankActivity.QrCodeScanner"></activity>
+        <activity android:name=".UserSetting" />
         <activity android:name=".bankActivity.BankDashboard" />
         <activity android:name=".QrCode" />
         <activity android:name=".Notifikasi" />

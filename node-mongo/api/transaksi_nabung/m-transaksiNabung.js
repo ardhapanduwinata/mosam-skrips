@@ -2,11 +2,11 @@ const mongoose = require('mongoose');
 
 const userSchema = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
-    idUser: {
+    user: {
         type: String,
         required: true,
     },
-    idBank: {
+    bank: {
         type: String,
         required: true,
     },
@@ -14,13 +14,13 @@ const userSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    jumlahBbesar: {
+    jmlbotolA: {
         type: Number
     },
-    jumlahBsedang: {
+    jumlbotolB: {
         type: Number
     },
-    jumlahBkecil: {
+    jmlgelas: {
         type: Number
     }
 });
