@@ -61,6 +61,41 @@ router.get("/:user", (req, res, next) => {
         });
 });
 
+router.patch("/:userId", (req, res, next) => {
+    const id = req.params.userId;
+
+    Tabungan.findOne({
+            user: id
+        })
+        .exec()
+        .then(result => {
+            console.log(result);
+            Tabungan.updateMany({
+                    user: id
+                }, {
+                    $set: req.body
+                })
+                .exec()
+                .then(doc => {
+                    res.status(200).json({
+                        message: "Data berhasil di Update!"
+                    })
+                })
+                .catch(err => {
+                    console.log(err);
+                    res.status(500).json({
+                        error: err
+                    })
+                })
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                error: err
+            })
+        })
+})
+
 router.post("/", (req, res, next) => {
     const tabungan = new Tabungan({
         _id: new mongooose.Types.ObjectId(),

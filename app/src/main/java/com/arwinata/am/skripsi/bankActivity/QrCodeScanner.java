@@ -4,6 +4,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -38,6 +39,7 @@ public class QrCodeScanner extends AppCompatActivity implements ZXingScannerView
 //        sharedPrefManager.saveSPString(SharedPrefManager.sp_iduser, rawResult.getText());
 //        sharedPrefManager.saveSPString(SharedPrefManager.sp_iduser, rawResult.getBarcodeFormat().toString());
 
+        Intent i = new Intent();
         Log.v("TAG", rawResult.getText()); // Prints scan results
         Log.v("TAG", rawResult.getBarcodeFormat().toString());
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
