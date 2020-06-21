@@ -99,8 +99,6 @@ public class Login extends AppCompatActivity {
                             username = response.body().getName();
                     String level = response.body().getLevel();
 
-                    sharedPrefManager.saveSPString(SharedPrefManager.sp_iduser, idUser);
-                    sharedPrefManager.saveSPString(SharedPrefManager.sp_namauser, username);
                     sharedPrefManager.saveSPBoolean(SharedPrefManager.sp_sudahLogin, true);
                     sharedPrefManager.saveSPString(SharedPrefManager.sp_level, level);
                     Class nextClass = Dashboard.class;
@@ -108,8 +106,10 @@ public class Login extends AppCompatActivity {
                     Toast.makeText( Login.this,"Halo " + username, Toast.LENGTH_LONG).show();
 
                     if(level.equals("satu")){
+                        sharedPrefManager.saveSPString(SharedPrefManager.sp_idbank, idUser);
                         nextClass = BankDashboard.class;
                     } else if (level.equals("dua")){
+                        sharedPrefManager.saveSPString(SharedPrefManager.sp_iduser, idUser);
                         nextClass = Dashboard.class;
                     }
 

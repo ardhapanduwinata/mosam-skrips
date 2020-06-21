@@ -2,60 +2,63 @@ const express = require("express");
 const router = express.Router();
 const mongooose = require("mongoose");
 
-const transaksiNabung = require("./m-transaksiNabung");
+const Nabung = require("./m-transaksiNabung");
 
 router.post("/", (req, res, next) => {
-    const transaksi = new transaksiNabung({
+    const nabung = new transaksiNabung({
         _id: new mongooose.Types.ObjectId(),
-        idUser: req.body.idUser,
-        idBank: req.body.idBank,
+        user: req.body.user,
+        bank: req.body.bank,
         date: req.body.date,
-        jumlahBbesar: req.body.jumlahBbesar,
-        jumlahBsedang: req.body.jumlahBsedang,
-        jumlahBkecil: req.body.jumlahBkecil
+        jmlbotolA: req.body.jmlbotolA,
+        jmlbotolB: req.body.jmlbotolB,
+        jmlgelas: req.body.jmlgelas
     })
 
     User.findOne({
-            email: email,
+            user: user,
         })
         .exec()
         .then((doc) => {
             console.log("From database", doc);
             if (!doc) {
                 return res.status(404).json({
-                    message: "Email anda salah",
+                    message: "User tidak ditemukan!",
                 });
             } else {
-                if (req.body.password != doc.password) {
-                    return res.status(500).json({
-                        message: "Password anda salah",
-                    });
-                } else {
-                    res.status(200).json({
-                        message: "Anda berhasil masuk",
-                        email: doc.email,
-                        name: doc.name,
-                        level: doc.level,
-                        _id: doc._id
-                    });
-                }
+                nabung.save()
+                    .then(result => {
+                        console.log(result);
+                        res.status(201).json({
+                            _id: result._id,
+                            user: result.user,
+                            bank: result.bank,
+                            date: result.date,
+                            jmlbotolA: result.jmlbotolA,
+                            jmlbotolB: result.jmlbotolB,
+                            jmlgelas: result.jmlgelas
+                        })
+                    })
+                    .catch(err => {
+                        res.status(500).json({
+                            error: err
+                        })
+                    })
             }
         })
         .catch((err) => {
             console.log(err);
-            res.status(404).json({
-                message: "Email anda salah",
-            });
-            res.status(404).json({
-                message: "Email anda salah",
+            res.status(500).json({
+                error: err
             });
         });
 });
 
-router.get("/:userId", (req, res, next) => {
-    const id = req.params.userId;
-    User.findById(id)
-        .select("_id email name")
+router.get("/:user", (req, res, next) => {
+    const user = req.params.user;
+    User.find({
+            user: user
+        })
         .exec()
         .then(doc => {
             console.log("from database ", doc);
