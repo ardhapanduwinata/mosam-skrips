@@ -1,15 +1,16 @@
-package com.arwinata.am.skripsi.bankActivity;
-
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import me.dm7.barcodescanner.zxing.ZXingScannerView;
+package com.arwinata.am.skripsi.bank_activity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.arwinata.am.skripsi.Retrofit.service.SharedPrefManager;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.arwinata.am.skripsi.shared_preference.SharedPrefManager;
 import com.google.zxing.Result;
+
+import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 public class QrCodeScanner extends AppCompatActivity implements ZXingScannerView.ResultHandler {
 

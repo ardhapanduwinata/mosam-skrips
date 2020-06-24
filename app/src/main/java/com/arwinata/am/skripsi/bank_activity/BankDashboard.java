@@ -1,4 +1,5 @@
-package com.arwinata.am.skripsi;
+
+package com.arwinata.am.skripsi.bank_activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import okhttp3.OkHttpClient;
@@ -18,44 +19,46 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.arwinata.am.skripsi.user_activity.Login;
+import com.arwinata.am.skripsi.R;
 import com.arwinata.am.skripsi.model.TabunganResponse;
 import com.arwinata.am.skripsi.model.UserResponse;
 import com.arwinata.am.skripsi.shared_preference.SharedPrefManager;
 import com.arwinata.am.skripsi.Retrofit.service.UserClient;
+import com.arwinata.am.skripsi.user_activity.UserSetting;
 
-public class Dashboard extends AppCompatActivity{
+public class BankDashboard extends AppCompatActivity {
+
+    Button logout, btnterimatabungan;
+    ImageView setting;
     SharedPrefManager sharedPrefManager;
-    TextView username, tvjmlbotolA, tvjmlbotolB, tvjmlgelas, logout;
-    ImageView bus, misi, setting;
-    Button nabung;
-    String namauser;
+    String iduser, namauser;
+    TextView tvuser, tvjmlbotolA, tvjmlbotolB, tvjmlgelas;
     int jmlbotolA, jmlbotolB, jmlgelas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dashboard);
+        setContentView(R.layout.activity_bank_dashboard);
         sharedPrefManager = new SharedPrefManager(this);
 
-        String user = sharedPrefManager.getSP_iduser();
-        cekuser(user, this);
-        cektabungan(user, this);
+        iduser = sharedPrefManager.getSP_idbank();
 
-        username = findViewById(R.id.tvNamaUser_dash);
+        cekuser(iduser, this);
+        cektabungan(iduser, this);
+
+        logout = findViewById(R.id.buttonLogout_dashbank);
+        tvuser = findViewById(R.id.tvNamaUser_dashBank);
         tvjmlbotolA = findViewById(R.id.tvJml15l);
         tvjmlbotolB = findViewById(R.id.tvJml600ml);
         tvjmlgelas = findViewById(R.id.tvtvJml300ml);
-        nabung = findViewById(R.id.btnNabung);
-        logout = findViewById(R.id.buttonLogout_dash);
-        bus = findViewById(R.id.ivBusDash);
-        misi = findViewById(R.id.ivMisiDash);
-        setting = findViewById(R.id.ivSettingDash);
+        setting = findViewById(R.id.ivSetting);
+        btnterimatabungan = findViewById(R.id.btnTerimaNabung);
 
-        nabung.setOnClickListener(new View.OnClickListener() {
+        btnterimatabungan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(Dashboard.this, QrCode.class);
-                startActivity(i);
+                startActivity(new Intent(BankDashboard.this, QrCodeScanner.class));
             }
         });
 
@@ -63,7 +66,7 @@ public class Dashboard extends AppCompatActivity{
             @Override
             public void onClick(View view) {
                 sharedPrefManager.saveSPBoolean(SharedPrefManager.sp_sudahLogin, false);
-                startActivity(new Intent(Dashboard.this, Login.class)
+                startActivity(new Intent(BankDashboard.this, Login.class)
                         .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
                 finish();
             }
@@ -72,7 +75,7 @@ public class Dashboard extends AppCompatActivity{
         setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(Dashboard.this, UserSetting.class);
+                Intent i = new Intent(BankDashboard.this, UserSetting.class);
                 startActivity(i);
                 finish();
             }
@@ -105,7 +108,7 @@ public class Dashboard extends AppCompatActivity{
             @Override
             public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
                 namauser = response.body().getName();
-                username.setText("Hallo "+namauser+" selamat datang!");
+                tvuser.setText("Hallo "+namauser+" selamat datang!");
             }
 
             @Override

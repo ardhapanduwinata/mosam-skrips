@@ -1,4 +1,4 @@
-package com.arwinata.am.skripsi;
+package com.arwinata.am.skripsi.user_activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.arwinata.am.skripsi.R;
 import com.arwinata.am.skripsi.shared_preference.SharedPrefManager;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;

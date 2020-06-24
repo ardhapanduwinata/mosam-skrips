@@ -1,4 +1,4 @@
-package com.arwinata.am.skripsi;
+package com.arwinata.am.skripsi.user_activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import okhttp3.OkHttpClient;
@@ -16,6 +16,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.arwinata.am.skripsi.MainActivity;
+import com.arwinata.am.skripsi.R;
 import com.arwinata.am.skripsi.model.TabunganResponse;
 import com.arwinata.am.skripsi.model.User;
 import com.arwinata.am.skripsi.shared_preference.SharedPrefManager;

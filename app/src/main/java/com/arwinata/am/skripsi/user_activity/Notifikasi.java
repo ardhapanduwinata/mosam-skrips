@@ -1,14 +1,16 @@
-package com.arwinata.am.skripsi;
+package com.arwinata.am.skripsi.user_activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class Setting extends AppCompatActivity {
+import com.arwinata.am.skripsi.R;
+
+public class Notifikasi extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_setting);
+        setContentView(R.layout.activity_notifikasi);
     }
 }

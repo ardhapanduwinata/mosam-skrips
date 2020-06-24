@@ -1,4 +1,4 @@
-package com.arwinata.am.skripsi.bankActivity;
+package com.arwinata.am.skripsi.bank_activity;
 
 import android.os.Bundle;
 import android.widget.Button;

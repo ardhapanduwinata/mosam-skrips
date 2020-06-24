@@ -1,4 +1,4 @@
-package com.arwinata.am.skripsi;
+package com.arwinata.am.skripsi.user_activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import okhttp3.OkHttpClient;
@@ -16,11 +16,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.arwinata.am.skripsi.MainActivity;
+import com.arwinata.am.skripsi.R;
 import com.arwinata.am.skripsi.model.UserResponse;
 import com.arwinata.am.skripsi.model.LoginRequest;
 import com.arwinata.am.skripsi.shared_preference.SharedPrefManager;
 import com.arwinata.am.skripsi.Retrofit.service.UserClient;
-import com.arwinata.am.skripsi.bankActivity.BankDashboard;
+import com.arwinata.am.skripsi.bank_activity.BankDashboard;
 
 public class Login extends AppCompatActivity {
 

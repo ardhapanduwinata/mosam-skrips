@@ -8,7 +8,10 @@ import android.view.View;
 import android.widget.Button;
 
 import com.arwinata.am.skripsi.shared_preference.SharedPrefManager;
-import com.arwinata.am.skripsi.bankActivity.BankDashboard;
+import com.arwinata.am.skripsi.bank_activity.BankDashboard;
+import com.arwinata.am.skripsi.user_activity.Dashboard;
+import com.arwinata.am.skripsi.user_activity.Login;
+import com.arwinata.am.skripsi.user_activity.Register;
 
 public class MainActivity extends AppCompatActivity {
 

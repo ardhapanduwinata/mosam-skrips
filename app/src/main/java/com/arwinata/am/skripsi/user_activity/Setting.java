@@ -1,14 +1,16 @@
-package com.arwinata.am.skripsi;
+package com.arwinata.am.skripsi.user_activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class Voucher extends AppCompatActivity {
+import com.arwinata.am.skripsi.R;
+
+public class Setting extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_voucher);
+        setContentView(R.layout.activity_setting);
     }
 }
