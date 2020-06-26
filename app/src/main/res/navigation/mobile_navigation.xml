@@ -12,14 +12,20 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.arwinata.am.skripsi.ui.dashboard.DashboardFragment"
+        android:id="@+id/navigation_voucher"
+        android:name="com.arwinata.am.skripsi.ui.voucher.DashboardFragment"
         android:label="@string/title_voucher"
         tools:layout="@layout/fragment_dashboard" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.arwinata.am.skripsi.ui.notifications.NotificationsFragment"
+        android:id="@+id/navigation_mission"
+        android:name="com.arwinata.am.skripsi.ui.mission.NotificationsFragment"
         android:label="@string/title_mission"
         tools:layout="@layout/fragment_notifications" />
+
+    <fragment
+        android:id="@+id/navigation_profil"
+        android:name="com.arwinata.am.skripsi.ui.profil.ProfilFragment"
+        android:label="@string/title_mission"
+        tools:layout="@layout/fragment_profil" />
 </navigation>
