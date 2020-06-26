@@ -25,7 +25,7 @@ public class NambahTabungan extends AppCompatActivity {
         edtbotolA = findViewById(R.id.edtjmlbotolA);
         edtbotolB = findViewById(R.id.edtjmlbotolB);
         edtgelas = findViewById(R.id.edtjmlgelas);
-        btntambah = findViewById(R.id.btntambah);
+        btntambah = findViewById(R.id.btntambahgelas);
         btnback = findViewById(R.id.btn_backTambahtabungan);
     }
 }
