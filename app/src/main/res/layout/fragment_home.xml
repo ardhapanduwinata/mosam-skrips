@@ -1,22 +1,225 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.home.HomeFragment">
+    android:clipChildren="false"
+    tools:context=".user_activity.Dashboard">
 
     <TextView
-        android:id="@+id/text_home"
-        android:layout_width="match_parent"
+        android:id="@+id/tvMosam"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:text="Mosam"
+        android:textColor="@color/black"
+        android:textSize="25dp" />
+
+    <Button
+        android:id="@+id/buttonLogout_dash"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@color/white"
+        android:text="Logout" />
+
+    <ImageView
+        android:id="@+id/imgUser_main"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_below="@+id/tvMosam"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/account" />
+
+    <TextView
+        android:id="@+id/tvNamaUser_dash"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvMosam"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="35dp"
+        android:layout_toRightOf="@+id/imgUser_main"
+        android:text="Hallo, Username Pengguna"
+        android:textSize="15sp" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="260dp"
+        android:layout_below="@+id/imgUser_main"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:background="@drawable/roundbg"
+        android:clipChildren="false">
+
+        <!--        <ImageView-->
+        <!--            android:id="@+id/ivNabungFull"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="260dp"-->
+        <!--            android:layout_below="@+id/imgUser_main"-->
+        <!--            android:layout_marginLeft="20dp"-->
+        <!--            android:layout_marginTop="20dp"-->
+        <!--            android:layout_marginRight="20dp"-->
+        <!--            android:background="@drawable/roundbg" />-->
+
+        <TextView
+            android:id="@+id/tvTabunganBotol"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="25dp"
+            android:text="Tabungan Botol anda:"
+            android:textSize="15sp" />
+        <!--        android:layout_below="@+id/imgUser_main"-->
+
+        <TextView
+            android:id="@+id/tv15l"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvTabunganBotol"
+            android:layout_marginLeft="55dp"
+            android:paddingTop="10dp"
+            android:text="1,5 L"
+            android:textSize="15sp" />
+
+        <ImageView
+            android:id="@+id/iv15l"
+            android:layout_width="140dp"
+            android:layout_height="150dp"
+            android:layout_below="@+id/tv15l"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/botolbesar" />
+
+        <TextView
+            android:id="@+id/tv600ml"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv15l"
+            android:layout_marginLeft="45dp"
+            android:layout_toRightOf="@+id/tv15l"
+            android:paddingTop="20dp"
+            android:text="600 ml"
+            android:textSize="15sp" />
+
+        <ImageView
+            android:id="@+id/iv600ml"
+            android:layout_width="120dp"
+            android:layout_height="110dp"
+            android:layout_below="@+id/tv600ml"
+            android:layout_marginLeft="-50dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@+id/iv15l"
+            android:background="@drawable/botolsedang" />
+
+        <TextView
+            android:id="@+id/tv300ml"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv600ml"
+            android:layout_marginLeft="30dp"
+            android:layout_toRightOf="@+id/tv600ml"
+            android:paddingTop="20dp"
+            android:text="300 ml"
+            android:textSize="15sp" />
+
+        <ImageView
+            android:id="@+id/iv300ml"
+            android:layout_width="70dp"
+            android:layout_height="60dp"
+            android:layout_below="@+id/tv300ml"
+            android:layout_marginLeft="-20dp"
+            android:layout_marginTop="15dp"
+            android:layout_toRightOf="@+id/iv600ml"
+            android:background="@drawable/gelas" />
+
+        <TextView
+            android:id="@+id/tvJml15l"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/iv15l"
+            android:layout_alignLeft="@+id/ivNabungFull"
+            android:layout_marginLeft="28dp"
+            android:layout_marginTop="10dp"
+            android:text="1"
+            android:textAlignment="center" />
+
+        <TextView
+            android:id="@+id/tvJml600ml"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/iv600ml"
+            android:layout_alignLeft="@+id/tvJml15l"
+            android:layout_marginLeft="78dp"
+            android:layout_marginTop="10dp"
+            android:text="1"
+            android:textAlignment="center" />
+
+        <TextView
+            android:id="@+id/tvtvJml300ml"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/iv300ml"
+            android:layout_alignLeft="@+id/tvJml600ml"
+            android:layout_marginLeft="73dp"
+            android:layout_marginTop="15dp"
+            android:text="1"
+            android:textAlignment="center" />
+
+
+        <Button
+            android:id="@+id/btnNabung"
+            android:layout_width="110dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            android:background="@drawable/halfrounded"
+            android:text="Nabung Yuk!"
+            android:textAllCaps="false"
+            android:textSize="20sp" />
+    </RelativeLayout>
+
+    <!--    <RelativeLayout-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="70dp"-->
+    <!--        android:layout_alignParentBottom="true"-->
+    <!--        android:background="@color/colorPrimary">-->
+
+    <!--        <ImageView-->
+    <!--            android:id="@+id/ivHome"-->
+    <!--            android:layout_width="50dp"-->
+    <!--            android:layout_height="50dp"-->
+    <!--            android:layout_centerVertical="true"-->
+    <!--            android:layout_marginLeft="20dp"-->
+    <!--            android:background="@drawable/home"/>-->
+
+    <!--        <ImageView-->
+    <!--            android:id="@+id/ivBusDash"-->
+    <!--            android:layout_width="50dp"-->
+    <!--            android:layout_height="50dp"-->
+    <!--            android:layout_centerVertical="true"-->
+    <!--            android:layout_marginLeft="55dp"-->
+    <!--            android:background="@drawable/bus"-->
+    <!--            android:layout_toRightOf="@id/ivHome"/>-->
+
+    <!--        <ImageView-->
+    <!--            android:id="@+id/ivMisiDash"-->
+    <!--            android:layout_width="50dp"-->
+    <!--            android:layout_height="50dp"-->
+    <!--            android:layout_centerVertical="true"-->
+    <!--            android:layout_marginRight="55dp"-->
+    <!--            android:layout_toLeftOf="@+id/ivSettingDash"-->
+    <!--            android:background="@drawable/mission"/>-->
+
+    <!--        <ImageView-->
+    <!--            android:id="@+id/ivSettingDash"-->
+    <!--            android:layout_width="50dp"-->
+    <!--            android:layout_height="50dp"-->
+    <!--            android:layout_centerVertical="true"-->
+    <!--            android:layout_alignParentRight="true"-->
+    <!--            android:layout_marginRight="20dp"-->
+    <!--            android:background="@drawable/account"/>-->
+    <!--    </RelativeLayout>-->
+
+</RelativeLayout>
