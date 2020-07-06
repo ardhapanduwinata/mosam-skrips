@@ -7,24 +7,23 @@ const userSchema = mongoose.Schema({
         ref: "Users",
         required: true,
     },
-    bank: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Users",
-        required: true,
-    },
     date: {
         type: String,
         required: true
     },
+    jmlVoucher: {
+        type: Number,
+        default: 0
+    },
     jmlbotolA: {
-        type: Number
+        type: Number,
     },
     jmlbotolB: {
-        type: Number
+        type: Number,
     },
     jmlgelas: {
-        type: Number
-    }
+        type: Number,
+    },
 });
 
-module.exports = mongoose.model('transaksiNabung', userSchema);
+module.exports = mongoose.model('transaksiTukarVoucher', userSchema);

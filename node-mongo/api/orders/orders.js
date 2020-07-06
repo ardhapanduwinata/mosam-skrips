@@ -7,7 +7,7 @@ const Product = require("../products/m-product");
 router.get("/", (req, res, next) => {
   Order.find()
     .select("product quantity _id")
-    .populate("product", "name")
+    .populate("product")
     .exec()
     .then((docs) => {
       res.status(200).json({
@@ -15,7 +15,8 @@ router.get("/", (req, res, next) => {
         orders: docs.map((doc) => {
           return {
             _id: doc._id,
-            product: doc.product,
+            product: doc.product.name,
+            productPrice: doc.product.price,
             quantity: doc.quantity,
             request: {
               type: "GET",

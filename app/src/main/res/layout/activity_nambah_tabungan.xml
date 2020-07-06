@@ -6,28 +6,22 @@
     android:layout_height="match_parent"
     tools:context=".bankActivity.NambahTabungan">
 
+
+
     <TextView
-        android:id="@+id/tvMosam"
+        android:id="@+id/btn_backTambahtabungan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Mosam"
-        android:textSize="25dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginLeft="20dp"
-        android:textColor="@color/black"/>
-
-    <Button
-        android:id="@+id/btn_backTambahtabungan"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
+        android:layout_marginRight="30dp"
         android:layout_alignParentRight="true"
         android:layout_marginTop="30dp"
+        android:textSize="18sp"
         android:text="&lt; Back"
         android:textColor="@color/black"
         android:textStyle="bold"
         android:background="@color/transparent">
-    </Button>
+    </TextView>
 
     <TextView
         android:id="@+id/tvPengguna"
@@ -36,8 +30,8 @@
         android:text="Nama pengguna"
         android:textSize="20dp"
         android:textColor="@color/black"
-        android:layout_below="@+id/tvMosam"
-        android:layout_marginTop="20dp"
+        android:layout_below="@+id/btn_backTambahtabungan"
+        android:layout_marginTop="30dp"
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp">
     </TextView>
@@ -72,7 +66,7 @@
             android:layout_toRightOf="@+id/iv15l"
             android:gravity="bottom"
             android:textAlignment="center"
-            android:textSize="25dp"
+            android:textSize="20dp"
             android:layout_marginLeft="-10dp"
             android:hint="Jumlah Botol 1,5 L"
             android:layout_marginTop="60dp"/>
@@ -104,7 +98,7 @@
             android:layout_marginRight="30dp"
             android:layout_height="100dp"
             android:layout_toRightOf="@+id/iv600ml"
-            android:textSize="25dp"
+            android:textSize="20dp"
             android:textAlignment="center"
             android:gravity="bottom"
             android:hint="Jumlah Botol 600 ml"
@@ -140,7 +134,7 @@
             android:layout_marginRight="30dp"
             android:layout_height="100dp"
             android:layout_toRightOf="@+id/iv600ml"
-            android:textSize="25dp"
+            android:textSize="20dp"
             android:textAlignment="center"
             android:hint="Jumlah Gelas 300 ml"
             android:gravity="bottom"
@@ -148,7 +142,7 @@
             android:layout_marginTop="30dp"/>
 
         <Button
-            android:id="@+id/btntambahgelas"
+            android:id="@+id/btntambah"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:text="Tambah"

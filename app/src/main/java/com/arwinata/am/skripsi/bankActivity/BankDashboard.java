@@ -21,7 +21,8 @@ import android.widget.Toast;
 
 import com.arwinata.am.skripsi.Login;
 import com.arwinata.am.skripsi.R;
-import com.arwinata.am.skripsi.Retrofit.model.TabunganResponse;
+import com.arwinata.am.skripsi.Retrofit.CheckingConnection;
+import com.arwinata.am.skripsi.Retrofit.model.Tabungan;
 import com.arwinata.am.skripsi.Retrofit.model.UserResponse;
 import com.arwinata.am.skripsi.Retrofit.service.SharedPrefManager;
 import com.arwinata.am.skripsi.Retrofit.service.UserClient;
@@ -29,18 +30,19 @@ import com.arwinata.am.skripsi.UserSetting;
 
 public class BankDashboard extends AppCompatActivity {
 
-    Button logout, btnterimatabungan;
     ImageView setting;
     SharedPrefManager sharedPrefManager;
     String iduser, namauser;
-    TextView tvuser, tvjmlbotolA, tvjmlbotolB, tvjmlgelas;
+    TextView tvuser, tvjmlbotolA, tvjmlbotolB, tvjmlgelas, logout, btnterimatabungan;
     int jmlbotolA, jmlbotolB, jmlgelas;
+    CheckingConnection ck;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bank_dashboard);
         sharedPrefManager = new SharedPrefManager(this);
+        ck = new CheckingConnection();
 
         iduser = sharedPrefManager.getSP_idbank();
 
@@ -59,6 +61,7 @@ public class BankDashboard extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(BankDashboard.this, QrCodeScanner.class));
+                finish();
             }
         });
 
@@ -91,9 +94,8 @@ public class BankDashboard extends AppCompatActivity {
         okhttp.addInterceptor(logging);
 
         //membuat instance retrofit
-        String BASE_URL = "http://192.168.1.70:3000";
         Retrofit.Builder builder = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
+                .baseUrl(ck.getBASE_URL())
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(okhttp.build());
 
@@ -127,9 +129,8 @@ public class BankDashboard extends AppCompatActivity {
         okhttp.addInterceptor(logging);
 
         //membuat instance retrofit
-        String BASE_URL = "http://192.168.1.70:3000";
         Retrofit.Builder builder = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
+                .baseUrl(ck.getBASE_URL())
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(okhttp.build());
 
@@ -137,12 +138,12 @@ public class BankDashboard extends AppCompatActivity {
 
         //mendapatkan client & memanggil object
         final UserClient client = retrofit.create(UserClient.class);
-        Call<TabunganResponse> call = client.cekTabungan(iduser);
+        Call<Tabungan> call = client.cekTabungan(iduser);
 
-        call.enqueue(new Callback<TabunganResponse>() {
+        call.enqueue(new Callback<Tabungan>() {
 
             @Override
-            public void onResponse(Call<TabunganResponse> call, Response<TabunganResponse> response) {
+            public void onResponse(Call<Tabungan> call, Response<Tabungan> response) {
                 if(response.isSuccessful()){
                     if (response.body().getMessage().equals("Tabungan tidak ditemukan!")) {
 
@@ -159,7 +160,7 @@ public class BankDashboard extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<TabunganResponse> call, Throwable t) {
+            public void onFailure(Call<Tabungan> call, Throwable t) {
                 Toast.makeText(context, t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });

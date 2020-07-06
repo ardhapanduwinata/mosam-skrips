@@ -19,24 +19,25 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.arwinata.am.skripsi.Retrofit.CheckingConnection;
-import com.arwinata.am.skripsi.Retrofit.model.TabunganResponse;
+import com.arwinata.am.skripsi.Retrofit.model.Tabungan;
 import com.arwinata.am.skripsi.Retrofit.model.UserResponse;
 import com.arwinata.am.skripsi.Retrofit.service.SharedPrefManager;
 import com.arwinata.am.skripsi.Retrofit.service.UserClient;
 
 public class Dashboard extends AppCompatActivity{
     SharedPrefManager sharedPrefManager;
-    TextView username, tvjmlbotolA, tvjmlbotolB, tvjmlgelas, logout;
+    TextView username, tvjmlbotolA, tvjmlbotolB, tvjmlgelas, logout, nabung;
     ImageView bus, misi, setting;
-    Button nabung;
     String namauser;
     int jmlbotolA, jmlbotolB, jmlgelas;
+    CheckingConnection ck;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
         sharedPrefManager = new SharedPrefManager(this);
+        ck = new CheckingConnection();
 
         String user = sharedPrefManager.getSP_iduser();
         cekuser(user, this);
@@ -78,6 +79,15 @@ public class Dashboard extends AppCompatActivity{
                 finish();
             }
         });
+
+        bus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(Dashboard.this, Voucher.class);
+                startActivity(i);
+                finish();
+            }
+        });
     }
 
     public void cekuser(String idUser, final Context context) {
@@ -89,9 +99,8 @@ public class Dashboard extends AppCompatActivity{
         okhttp.addInterceptor(logging);
 
         //membuat instance retrofit
-        String BASE_URL = "http://192.168.1.70:3000";
         Retrofit.Builder builder = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
+                .baseUrl(ck.getBASE_URL())
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(okhttp.build());
 
@@ -125,9 +134,8 @@ public class Dashboard extends AppCompatActivity{
         okhttp.addInterceptor(logging);
 
         //membuat instance retrofit
-        String BASE_URL = "http://192.168.1.70:3000";
         Retrofit.Builder builder = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
+                .baseUrl(ck.getBASE_URL())
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(okhttp.build());
 
@@ -135,12 +143,12 @@ public class Dashboard extends AppCompatActivity{
 
         //mendapatkan client & memanggil object
         final UserClient client = retrofit.create(UserClient.class);
-        Call<TabunganResponse> call = client.cekTabungan(iduser);
+        Call<Tabungan> call = client.cekTabungan(iduser);
 
-        call.enqueue(new Callback<TabunganResponse>() {
+        call.enqueue(new Callback<Tabungan>() {
 
             @Override
-            public void onResponse(Call<TabunganResponse> call, Response<TabunganResponse> response) {
+            public void onResponse(Call<Tabungan> call, Response<Tabungan> response) {
                 if(response.isSuccessful()){
                     if (response.body().getMessage().equals("Tabungan tidak ditemukan!")) {
 
@@ -157,7 +165,7 @@ public class Dashboard extends AppCompatActivity{
             }
 
             @Override
-            public void onFailure(Call<TabunganResponse> call, Throwable t) {
+            public void onFailure(Call<Tabungan> call, Throwable t) {
                 Toast.makeText(context, t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });

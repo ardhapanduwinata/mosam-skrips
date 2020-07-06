@@ -7,18 +7,14 @@ const userSchema = mongoose.Schema({
         ref: "Users",
         required: true,
     },
-    jmlbotolA: {
+    jmlPoin: {
         type: Number,
         default: 0
     },
-    jmlbotolB: {
-        type: Number,
-        default: 0
-    },
-    jmlgelas: {
-        type: Number,
-        default: 0
-    },
+    badge: {
+        type: String,
+        default: "Bronze"
+    }
 });
 
-module.exports = mongoose.model('Tabungan', userSchema);
+module.exports = mongoose.model('Poin', userSchema);

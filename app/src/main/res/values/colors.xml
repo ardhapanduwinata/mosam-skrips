@@ -6,4 +6,7 @@
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
     <color name="transparent">#0000</color>
+    <color name="birusby">#2A55A3</color>
+    <color name="newcolor">#FFAAAAAA</color>
+    <color name="abu">#dfdfdf</color>
 </resources>

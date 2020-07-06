@@ -17,16 +17,16 @@
         android:layout_marginLeft="20dp"
         android:textColor="@color/black"/>
 
-    <Button
+    <TextView
         android:id="@+id/buttonLogout_dash"
         android:layout_width="wrap_content"
         android:layout_height="35dp"
+        android:textSize="18sp"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="25dp"
         android:layout_marginRight="20dp"
-        android:background="@color/white"
         android:text="Logout">
-    </Button>
+    </TextView>
 
     <ImageView
         android:id="@+id/imgUser_main"
@@ -173,9 +173,11 @@
         android:layout_alignTop="@+id/ivNabungFull"
         android:clipChildren="false">
 
-        <Button
+        <TextView
             android:id="@+id/btnNabung"
             android:layout_width="110dp"
+            android:gravity="center"
+            android:textColor="@color/black"
             android:layout_height="match_parent"
             android:background="@drawable/halfrounded"
             android:layout_centerInParent="true"
@@ -184,7 +186,7 @@
             android:text="Nabung Yuk!"
             android:textSize="20sp"
             android:textAllCaps="false">
-        </Button>
+        </TextView>
     </RelativeLayout>
 
     <RelativeLayout

@@ -2,21 +2,21 @@ const express = require("express");
 const router = express.Router();
 const mongooose = require("mongoose");
 
-const Tabungan = require("./m-tabungan");
+const Misi = require("./m-misi");
 
 router.get("/", (req, res, next) => {
-    Tabungan.find()
+    Misi.find()
         .exec()
         .then(docs => {
             const response = {
                 count: docs.length,
-                tabungan: docs.map(doc => {
+                poin: docs.map(doc => {
                     return {
                         _id: doc._id,
-                        userId: doc.user,
-                        jmlbotolA: doc.jmlbotolA,
-                        jmlbotolB: doc.jmlbotolB,
-                        jmlgelas: doc.jmlgelas
+                        detailmisi: doc.detailmisi,
+                        targetcapaian: doc.targetcapaian,
+                        jumlahpoin: doc.jumlahpoin,
+                        tabeldibutuhkan: doc.tabeldibutuhkan
                     }
                 })
             }
@@ -30,48 +30,49 @@ router.get("/", (req, res, next) => {
         });
 });
 
-router.get("/:user", (req, res, next) => {
-    const userId = req.params.user;
-    Tabungan.findOne({
-            user: userId
+router.get("/:id", (req, res, next) => {
+    const id = req.params.id;
+    Misi.findOne({
+            _id: id
         })
         .exec()
         .then((doc) => {
             console.log("From database", doc);
             if (!doc) {
                 return res.status(404).json({
-                    message: "Tabungan tidak ditemukan!",
+                    message: "Data Misi tidak ditemukan!",
                 });
             } else {
                 res.status(200).json({
                     message: "Data ditemukan!",
                     _id: doc._id,
-                    userId: doc.user,
-                    jmlbotolA: doc.jmlbotolA,
-                    jmlbotolB: doc.jmlbotolB,
-                    jmlgelas: doc.jmlgelas
+                    detailmisi: doc.detailmisi,
+                    targetcapaian: doc.targetcapaian,
+                    jumlahpoin: doc.jumlahpoin,
+                    tabeldibutuhkan: doc.tabeldibutuhkan
                 });
             }
         })
         .catch((err) => {
             console.log(err);
             res.status(404).json({
-                message: "Tabungan tidak ditemukan!",
+                message: "Data Misi tidak ditemukan!",
             });
         });
 });
 
-router.patch("/:user", (req, res, next) => {
-    const id = req.params.user;
+router.patch("/:id", (req, res, next) => {
+    const id = req.params.id;
 
-    Tabungan.findOne({
-            user: id
+    Misi.findOne({
+            _id: id
         })
         .exec()
         .then(result => {
             console.log(result);
-            Tabungan.updateMany({
-                    user: id
+
+            Misi.updateMany({
+                    _id: id
                 }, {
                     $set: req.body
                 })
@@ -97,24 +98,24 @@ router.patch("/:user", (req, res, next) => {
 })
 
 router.post("/", (req, res, next) => {
-    const tabungan = new Tabungan({
+    const misi = new Misi({
         _id: new mongooose.Types.ObjectId(),
-        user: req.body.user,
-        jmlbotolA: req.body.jmlbotolA,
-        jmlbotolB: req.body.jmlbotolB,
-        jmlgelas: req.body.jmlgelas
+        detailmisi: req.body.detailmisi,
+        targetcapaian: req.body.targetcapaian,
+        jumlahpoin: req.body.jumlahpoin,
+        tabeldibutuhkan: req.body.tabeldibutuhkan
     })
 
-    tabungan.save()
+    misi.save()
         .then(doc => {
             console.log(doc);
             res.status(200).json({
-                message: "Tabungan berhasil dibuat!",
-                idTabungan: doc._id,
-                idUser: doc.user,
-                jmlbotolA: doc.jmlbotolA,
-                jmlbotolB: doc.jmlbotolB,
-                jmlgelas: doc.jmlgelas
+                message: "Misi baru berhasil dibuat!",
+                _id: doc._id,
+                detailmisi: doc.detailmisi,
+                targetcapaian: doc.targetcapaian,
+                jumlahpoin: doc.jumlahpoin,
+                tabeldibutuhkan: doc.tabeldibutuhkan
             })
         })
         .catch(err => {
@@ -126,15 +127,15 @@ router.post("/", (req, res, next) => {
 
 });
 
-router.delete("/:idUser", (req, res, next) => {
-    const user = req.params.idUser;
-    Tabungan.deleteOne({
-            user: user
+router.delete("/:id", (req, res, next) => {
+    const id = req.params.id;
+    Misi.deleteOne({
+            _id: id
         })
         .exec()
         .then(result => {
             res.status(200).json({
-                message: "Tabungan terhapus"
+                message: "Misi telah terhapus"
             })
         })
         .catch((err) => {

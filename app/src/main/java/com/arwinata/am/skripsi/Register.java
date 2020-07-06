@@ -11,20 +11,22 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.arwinata.am.skripsi.Retrofit.model.TabunganResponse;
+import com.arwinata.am.skripsi.Retrofit.CheckingConnection;
+import com.arwinata.am.skripsi.Retrofit.model.Poin;
+import com.arwinata.am.skripsi.Retrofit.model.Tabungan;
 import com.arwinata.am.skripsi.Retrofit.model.User;
+import com.arwinata.am.skripsi.Retrofit.model.DataVoucher;
 import com.arwinata.am.skripsi.Retrofit.service.SharedPrefManager;
 import com.arwinata.am.skripsi.Retrofit.service.UserClient;
 
 public class Register extends AppCompatActivity {
 
-    private String BASE_URL = "http://192.168.1.70:3000";
+    CheckingConnection ck;
     SharedPrefManager sharedPrefManager;
 
     EditText edtemail, edtusername, edtpassword;
@@ -36,6 +38,7 @@ public class Register extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         sharedPrefManager = new SharedPrefManager(this);
+        ck = new CheckingConnection();
 
         level = "dua";
         edtemail = findViewById(R.id.edEmail_regis);
@@ -78,7 +81,7 @@ public class Register extends AppCompatActivity {
 
         //membuat instance retrofit
         final Retrofit.Builder builder = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
+                .baseUrl(ck.getBASE_URL())
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(okhttp.build());
 
@@ -99,8 +102,10 @@ public class Register extends AppCompatActivity {
                 } else {
                     Toast.makeText( Register.this,response.body().getMessage(), Toast.LENGTH_LONG).show();
 
-                    String user = response.body().get_id();
+                    String user = response.body().getId();
                     buattabungan(user);
+                    buatvoucher(user);
+                    buatpoin(user);
                     Intent i = new Intent(Register.this, Login.class);
                     startActivity(i);
                     overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
@@ -125,27 +130,93 @@ public class Register extends AppCompatActivity {
         okhttp.addInterceptor(logging);
 
         //membuat instance retrofit
-        String BASE_URL = "http://192.168.1.70:3000";
         Retrofit.Builder builder = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
+                .baseUrl(ck.getBASE_URL())
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(okhttp.build());
 
         Retrofit retrofit = builder.build();
 
-        TabunganResponse tabunganbaru = new TabunganResponse(iduser, 0, 0, 0);
+        Tabungan tabunganbaru = new Tabungan(iduser, 0, 0, 0);
 
         //mendapatkan client & memanggil object
         final UserClient client = retrofit.create(UserClient.class);
-        Call<TabunganResponse> newtabungan = client.buatTabungan(tabunganbaru);
-        newtabungan.enqueue(new Callback<TabunganResponse>() {
+        Call<Tabungan> newtabungan = client.buatTabungan(tabunganbaru);
+        newtabungan.enqueue(new Callback<Tabungan>() {
             @Override
-            public void onResponse(Call<TabunganResponse> call, Response<TabunganResponse> response) {
+            public void onResponse(Call<Tabungan> call, Response<Tabungan> response) {
+            }
+
+            @Override
+            public void onFailure(Call<Tabungan> call, Throwable t) {
+                Toast.makeText(Register.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void buatvoucher(String idUser){
+        //membuat okhttp client
+        OkHttpClient.Builder okhttp = new OkHttpClient.Builder();
+
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        okhttp.addInterceptor(logging);
+
+        //membuat instance retrofit
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl(ck.getBASE_URL())
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(okhttp.build());
+
+        Retrofit retrofit = builder.build();
+
+        DataVoucher voucherbaru = new DataVoucher(idUser, 0);
+
+        final UserClient client = retrofit.create(UserClient.class);
+        Call<DataVoucher> newVoucher = client.buatVoucher(voucherbaru);
+
+        newVoucher.enqueue(new Callback<DataVoucher>() {
+            @Override
+            public void onResponse(Call<DataVoucher> call, Response<DataVoucher> response) {
 
             }
 
             @Override
-            public void onFailure(Call<TabunganResponse> call, Throwable t) {
+            public void onFailure(Call<DataVoucher> call, Throwable t) {
+                Toast.makeText(Register.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void buatpoin(String idUser){
+        //membuat okhttp client
+        OkHttpClient.Builder okhttp = new OkHttpClient.Builder();
+
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        okhttp.addInterceptor(logging);
+
+        //membuat instance retrofit
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl(ck.getBASE_URL())
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(okhttp.build());
+
+        Retrofit retrofit = builder.build();
+
+        Poin voucherbaru = new Poin(idUser);
+
+        final UserClient client = retrofit.create(UserClient.class);
+        Call<Poin> call = client.buatPoin(voucherbaru);
+
+        call.enqueue(new Callback<Poin>() {
+            @Override
+            public void onResponse(Call<Poin> call, Response<Poin> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<Poin> call, Throwable t) {
                 Toast.makeText(Register.this, t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });

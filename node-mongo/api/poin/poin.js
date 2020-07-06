@@ -2,21 +2,20 @@ const express = require("express");
 const router = express.Router();
 const mongooose = require("mongoose");
 
-const Tabungan = require("./m-tabungan");
+const Poin = require("./m-poin");
 
 router.get("/", (req, res, next) => {
-    Tabungan.find()
+    Poin.find()
         .exec()
         .then(docs => {
             const response = {
                 count: docs.length,
-                tabungan: docs.map(doc => {
+                poin: docs.map(doc => {
                     return {
                         _id: doc._id,
                         userId: doc.user,
-                        jmlbotolA: doc.jmlbotolA,
-                        jmlbotolB: doc.jmlbotolB,
-                        jmlgelas: doc.jmlgelas
+                        jmlPoin: doc.jmlPoin,
+                        badge: doc.badge
                     }
                 })
             }
@@ -32,7 +31,7 @@ router.get("/", (req, res, next) => {
 
 router.get("/:user", (req, res, next) => {
     const userId = req.params.user;
-    Tabungan.findOne({
+    Poin.findOne({
             user: userId
         })
         .exec()
@@ -40,23 +39,22 @@ router.get("/:user", (req, res, next) => {
             console.log("From database", doc);
             if (!doc) {
                 return res.status(404).json({
-                    message: "Tabungan tidak ditemukan!",
+                    message: "Data Poin tidak ditemukan!",
                 });
             } else {
                 res.status(200).json({
                     message: "Data ditemukan!",
                     _id: doc._id,
                     userId: doc.user,
-                    jmlbotolA: doc.jmlbotolA,
-                    jmlbotolB: doc.jmlbotolB,
-                    jmlgelas: doc.jmlgelas
+                    jmlPoin: doc.jmlPoin,
+                    badge: doc.badge
                 });
             }
         })
         .catch((err) => {
             console.log(err);
             res.status(404).json({
-                message: "Tabungan tidak ditemukan!",
+                message: "Data Voucher tidak ditemukan!",
             });
         });
 });
@@ -64,13 +62,14 @@ router.get("/:user", (req, res, next) => {
 router.patch("/:user", (req, res, next) => {
     const id = req.params.user;
 
-    Tabungan.findOne({
+    Poin.findOne({
             user: id
         })
         .exec()
         .then(result => {
             console.log(result);
-            Tabungan.updateMany({
+
+            Poin.updateMany({
                     user: id
                 }, {
                     $set: req.body
@@ -97,24 +96,21 @@ router.patch("/:user", (req, res, next) => {
 })
 
 router.post("/", (req, res, next) => {
-    const tabungan = new Tabungan({
+    const poin = new Poin({
         _id: new mongooose.Types.ObjectId(),
         user: req.body.user,
-        jmlbotolA: req.body.jmlbotolA,
-        jmlbotolB: req.body.jmlbotolB,
-        jmlgelas: req.body.jmlgelas
+        jmlPoin: req.body.jmlPoin
     })
 
-    tabungan.save()
+    poin.save()
         .then(doc => {
             console.log(doc);
             res.status(200).json({
-                message: "Tabungan berhasil dibuat!",
+                message: "Tabungan Poin berhasil dibuat!",
                 idTabungan: doc._id,
                 idUser: doc.user,
-                jmlbotolA: doc.jmlbotolA,
-                jmlbotolB: doc.jmlbotolB,
-                jmlgelas: doc.jmlgelas
+                jmlPoin: doc.jmlPoin,
+                badge: doc.badge
             })
         })
         .catch(err => {
@@ -126,15 +122,15 @@ router.post("/", (req, res, next) => {
 
 });
 
-router.delete("/:idUser", (req, res, next) => {
-    const user = req.params.idUser;
-    Tabungan.deleteOne({
+router.delete("/:user", (req, res, next) => {
+    const user = req.params.user;
+    Poin.deleteOne({
             user: user
         })
         .exec()
         .then(result => {
             res.status(200).json({
-                message: "Tabungan terhapus"
+                message: "Tabungan Poin terhapus"
             })
         })
         .catch((err) => {
