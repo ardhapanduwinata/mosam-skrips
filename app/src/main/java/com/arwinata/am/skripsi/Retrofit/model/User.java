@@ -7,43 +7,52 @@ public class User{
 	@SerializedName("password")
 	private String password;
 
-	@SerializedName("name")
-	private String name;
-
 	@SerializedName("level")
 	private String level;
 
-	@SerializedName("email")
-	private String email;
+	@SerializedName("__v")
+	private int V;
+
+	@SerializedName("name")
+	private String name;
+
+	@SerializedName("_id")
+	private String id;
 
 	@SerializedName("message")
 	private String message;
-
-	@SerializedName("_id")
-	private String _id;
-
-	public String get_id() {
-		return _id;
-	}
 
 	public String getMessage() {
 		return message;
 	}
 
 	public User(String email, String name, String password, String level) {
-        this.password = password;
-        this.name = name;
-        this.level = level;
-        this.email = email;
-    }
+		this.password = password;
+		this.level = level;
+		this.name = name;
+		this.email = email;
+	}
 
-	public String getName() {
+	@SerializedName("email")
+	private String email;
+
+	public String getPassword(){
+		return password;
+	}
+
+	public String getLevel(){
+		return level;
+	}
+
+	public String getName(){
 		return name;
 	}
 
-	public String getEmail() {
-		return email;
+	public String getId(){
+		return id;
 	}
 
-	public String getLevel() {return level;}
+	public String getEmail(){
+		return email;
+	}
 }

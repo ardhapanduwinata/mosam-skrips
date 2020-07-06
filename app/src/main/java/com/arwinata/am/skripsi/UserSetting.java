@@ -19,6 +19,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.arwinata.am.skripsi.Retrofit.CheckingConnection;
 import com.arwinata.am.skripsi.Retrofit.model.EditProfileReq;
 import com.arwinata.am.skripsi.Retrofit.model.User;
 import com.arwinata.am.skripsi.Retrofit.model.UserResponse;
@@ -32,12 +33,14 @@ public class UserSetting extends AppCompatActivity {
     Button update, back, pass;
     TextView tvpass, tvreinputpass;
     SharedPrefManager sharedPrefManager;
+    CheckingConnection ck;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_setting);
         sharedPrefManager = new SharedPrefManager(this);
+        ck = new CheckingConnection();
 
         cekuser(sharedPrefManager.getSP_iduser(), this);
 
@@ -110,7 +113,6 @@ public class UserSetting extends AppCompatActivity {
     public void updateConnection(String id,EditProfileReq edtprofile)
     {
         //membuat okhttp client
-        String BASE_URL = "http://192.168.1.70:3000";
         OkHttpClient.Builder okhttp = new OkHttpClient.Builder();
 
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
@@ -119,7 +121,7 @@ public class UserSetting extends AppCompatActivity {
 
         //membuat instance retrofit
         Retrofit.Builder builder = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
+                .baseUrl(ck.getBASE_URL())
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(okhttp.build());
 
@@ -166,9 +168,8 @@ public class UserSetting extends AppCompatActivity {
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
         okhttp.addInterceptor(logging);
 
-        String BASE_URL = "http://192.168.1.70:3000";
         Retrofit.Builder builder = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
+                .baseUrl(ck.getBASE_URL())
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(okhttp.build());
 

@@ -13,12 +13,14 @@ import com.google.zxing.Result;
 
 public class QrCodeScanner extends AppCompatActivity implements ZXingScannerView.ResultHandler {
 
+    String hasil;
     SharedPrefManager sharedPrefManager;
     private ZXingScannerView mScannerView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mScannerView = new ZXingScannerView(this);
+        sharedPrefManager = new SharedPrefManager(this);
         setContentView(mScannerView);
     }
     @Override
@@ -36,17 +38,22 @@ public class QrCodeScanner extends AppCompatActivity implements ZXingScannerView
 
     @Override
     public void handleResult(Result rawResult) {
-//        sharedPrefManager.saveSPString(SharedPrefManager.sp_iduser, rawResult.getText());
-//        sharedPrefManager.saveSPString(SharedPrefManager.sp_iduser, rawResult.getBarcodeFormat().toString());
+        hasil = rawResult.getText();
 
-        Intent i = new Intent();
-        Log.v("TAG", rawResult.getText()); // Prints scan results
-        Log.v("TAG", rawResult.getBarcodeFormat().toString());
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Scan Result");
-        builder.setMessage(rawResult.getText());
-        AlertDialog alert1 = builder.create();
-        alert1.show();
+        sharedPrefManager.saveSPString(SharedPrefManager.sp_iduser, hasil);
+
+        Intent i = new Intent(QrCodeScanner.this, NambahTabungan.class);
+        finish();
+        startActivity(i);
+
+//        Log.v("TAG", hasil); // Prints scan results
+//        Log.v("TAG", rawResult.getBarcodeFormat().toString());
+//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//        builder.setTitle("Scan Result");
+//        builder.setMessage(hasil);
+//        AlertDialog alert1 = builder.create();
+//        alert1.show();
+
 
         mScannerView.resumeCameraPreview(this);
     }

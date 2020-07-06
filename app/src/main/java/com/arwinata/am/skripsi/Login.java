@@ -16,7 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.arwinata.am.skripsi.Retrofit.model.TabunganResponse;
+import com.arwinata.am.skripsi.Retrofit.CheckingConnection;
 import com.arwinata.am.skripsi.Retrofit.model.UserResponse;
 import com.arwinata.am.skripsi.Retrofit.model.LoginRequest;
 import com.arwinata.am.skripsi.Retrofit.service.SharedPrefManager;
@@ -25,8 +25,7 @@ import com.arwinata.am.skripsi.bankActivity.BankDashboard;
 
 public class Login extends AppCompatActivity {
 
-    private String BASE_URL = "http://192.168.1.70:3000";
-
+    CheckingConnection ck;
     //SharedPreference (biar login terus)
     SharedPrefManager sharedPrefManager;
 
@@ -39,6 +38,7 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         sharedPrefManager = new SharedPrefManager(this);
+        ck = new CheckingConnection();
 
             //init view
             edt_login_email = (EditText) findViewById(R.id.edemail_login);
@@ -79,7 +79,7 @@ public class Login extends AppCompatActivity {
 
         //membuat instance retrofit
         Retrofit.Builder builder = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
+                .baseUrl(ck.getBASE_URL())
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(okhttp.build());
 

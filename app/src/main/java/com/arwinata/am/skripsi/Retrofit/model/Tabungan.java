@@ -2,7 +2,7 @@ package com.arwinata.am.skripsi.Retrofit.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class TabunganResponse {
+public class Tabungan {
     @SerializedName("message")
     private String message;
 
@@ -21,7 +21,7 @@ public class TabunganResponse {
     @SerializedName("jmlgelas")
     private int jmlgelas;
 
-    public TabunganResponse(String user, int jmlbotolA, int jmlbotolB, int jmlgelas) {
+    public Tabungan(String user, int jmlbotolA, int jmlbotolB, int jmlgelas) {
         this.user = user;
         this.jmlbotolA = jmlbotolA;
         this.jmlbotolB = jmlbotolB;

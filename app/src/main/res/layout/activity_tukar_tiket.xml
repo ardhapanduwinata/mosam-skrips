@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TukarTiket">
+
+    <Button
+        android:id="@+id/btn_back"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="20dp"
+        android:text="&lt; Back"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:background="@color/transparent">
+    </Button>
+    <LinearLayout
+        android:id="@+id/judul"
+        android:layout_below="@id/btn_back"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textSize="20dp"
+            android:textColor="@color/black"
+            android:text="HALAMAN TUKAR TIKET"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/tukarbotolA"
+        android:layout_below="@id/judul"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="25dp"
+        android:orientation="horizontal"
+        android:background="@drawable/roundbg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/botolbesar"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1,5 L"
+                android:layout_marginBottom="5dp"
+                android:textSize="15sp"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="25dp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Jumlah dalam Tabungan: "
+                    android:textSize="17dp"/>
+
+                <TextView
+                    android:id="@+id/jmlbotolA"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="17dp"
+                    android:text="00"
+                    android:textColor="@color/black"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/kurangbotolA"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/minus"
+                    android:textAlignment="center"
+                    android:textSize="50dp"
+                    android:layout_marginRight="10dp"/>
+
+
+                <EditText
+                    android:id="@+id/edtvoucherbotolA"
+                    android:layout_width="70dp"
+                    android:enabled="false"
+                    android:textColor="@color/black"
+                    android:textAlignment="center"
+                    android:layout_height="wrap_content"
+                    android:text="0" />
+
+                <Button
+                    android:id="@+id/tambahbotolA"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/plus"
+                    android:textAlignment="center"
+                    android:textSize="50dp" />
+
+                <Button
+                    android:id="@+id/maxbotolA"
+                    android:layout_width="70dp"
+                    android:layout_height="35dp"
+                    android:layout_marginLeft="20dp"
+                    android:text="max"
+                    android:background="@color/newcolor"/>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/tukarbotolB"
+        android:layout_below="@id/tukarbotolA"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="25dp"
+        android:orientation="horizontal"
+        android:background="@drawable/roundbg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="90dp"
+                android:layout_height="80dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/botolsedang"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="600 Ml"
+                android:layout_marginBottom="5dp"
+                android:textSize="15sp"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="23dp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Jumlah dalam Tabungan: "
+                    android:textSize="17dp"/>
+
+                <TextView
+                    android:id="@+id/jmlbotolB"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="17dp"
+                    android:text="00"
+                    android:textColor="@color/black"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/kurangbotolB"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/minus"
+                    android:textAlignment="center"
+                    android:textSize="50dp"
+                    android:layout_marginRight="10dp"/>
+
+
+                <EditText
+                    android:id="@+id/edtvoucherbotolB"
+                    android:layout_width="70dp"
+                    android:enabled="false"
+                    android:textColor="@color/black"
+                    android:textAlignment="center"
+                    android:layout_height="wrap_content"
+                    android:text="0" />
+
+                <Button
+                    android:id="@+id/tambahbotolB"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/plus"
+                    android:textAlignment="center"
+                    android:textSize="50dp" />
+
+                <Button
+                    android:id="@+id/maxbotolB"
+                    android:layout_width="70dp"
+                    android:layout_height="35dp"
+                    android:layout_marginLeft="20dp"
+                    android:text="max"
+                    android:background="@color/newcolor"/>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/tukargelas"
+        android:layout_below="@id/tukarbotolB"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="25dp"
+        android:orientation="horizontal"
+        android:background="@drawable/roundbg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="25dp"
+                android:background="@drawable/gelas"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="300 Ml"
+                android:layout_marginBottom="10dp"
+                android:textSize="15sp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="23dp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Jumlah dalam Tabungan: "
+                    android:textSize="17dp"/>
+
+                <TextView
+                    android:id="@+id/jmlgelas"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="17dp"
+                    android:text="00"
+                    android:textColor="@color/black"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/kuranggelas"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/minus"
+                    android:textAlignment="center"
+                    android:textSize="50dp"
+                    android:layout_marginRight="10dp"/>
+
+
+                <EditText
+                    android:id="@+id/edtvouchergelas"
+                    android:layout_width="70dp"
+                    android:enabled="false"
+                    android:textColor="@color/black"
+                    android:textAlignment="center"
+                    android:layout_height="wrap_content"
+                    android:text="0" />
+
+                <Button
+                    android:id="@+id/tambahgelas"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/plus"
+                    android:textAlignment="center"
+                    android:textSize="50dp" />
+
+                <Button
+                    android:id="@+id/maxgelas"
+                    android:layout_width="70dp"
+                    android:layout_height="35dp"
+                    android:layout_marginLeft="20dp"
+                    android:text="max"
+                    android:background="@color/newcolor"/>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btntukartiket"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tukar Tiket"
+        android:paddingHorizontal="15dp"
+        android:background="@drawable/button_bg_transparent_black"
+        android:layout_marginRight="30dp"
+        android:layout_below="@id/keterangan"
+        android:layout_alignParentRight="true"/>
+
+    <LinearLayout
+        android:id="@+id/keterangan"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/tukargelas"
+        android:layout_width="210dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:textColor="@color/newcolor"
+            android:textSize="13dp"
+            android:layout_marginBottom="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ketentuan Penukaran Tiket:"/>
+
+        <TextView
+            android:textColor="@color/newcolor"
+            android:textSize="13dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1,5 L   : 3 Botol untuk 1 Tiket"/>
+
+        <TextView
+            android:textColor="@color/newcolor"
+            android:textSize="13dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="600 Ml: 5 Botol untuk 1 Tiket"/>
+
+        <TextView
+            android:textColor="@color/newcolor"
+            android:textSize="13dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="300 Ml: 10 Gelas untuk 1 Tiket"/>
+    </LinearLayout>
+
+
+</RelativeLayout>

@@ -12,6 +12,12 @@ const loginRoutes = require("./api/users/login");
 const registerRoutes = require("./api/users/register");
 const updateProfile = require("./api/users/updateProfile");
 const tabungan = require("./api/tabungan/tabungan");
+const nabung = require("./api/transaksi_nabung/nabung");
+const voucher = require("./api/voucher/voucher");
+const tukarvoucher = require("./api/tukar_voucher/tukarvoucher");
+const poin = require("./api/poin/poin");
+const misi = require("./api/misi/misi");
+const jalanimisi = require("./api/jalanimisi/jalanimisi");
 
 mongoose.connect(
     "mongodb+srv://root:" +
@@ -51,6 +57,12 @@ app.use("/login", loginRoutes);
 app.use("/register", registerRoutes);
 app.use("/updateProfile", updateProfile);
 app.use("/tabungan", tabungan);
+app.use("/nabung", nabung);
+app.use("/voucher", voucher);
+app.use("/tukarvoucher", tukarvoucher);
+app.use("/poin", poin);
+app.use("/misi", misi);
+app.use("/jalanimisi", jalanimisi)
 
 app.use((req, res, next) => {
     const error = new Error("Not Found");
