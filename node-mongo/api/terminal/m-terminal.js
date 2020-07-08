@@ -2,18 +2,14 @@ const mongoose = require('mongoose');
 
 const userSchema = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
-    user: {
+    namaTerminal: {
         type: String,
         required: true,
     },
-    jmlPoin: {
-        type: Number,
-        default: 0
-    },
-    badge: {
+    alamatTerminal: {
         type: String,
-        default: "Bronze"
+        required: true
     }
 });
 
-module.exports = mongoose.model('Poin', userSchema);
+module.exports = mongoose.model('Terminal', userSchema);

@@ -2,6 +2,8 @@ package com.arwinata.am.skripsi.Retrofit.service;
 
 import com.arwinata.am.skripsi.Retrofit.model.DataVoucher;
 import com.arwinata.am.skripsi.Retrofit.model.EditProfileReq;
+import com.arwinata.am.skripsi.Retrofit.model.JalanimisiItem;
+import com.arwinata.am.skripsi.Retrofit.model.Misi;
 import com.arwinata.am.skripsi.Retrofit.model.Nabung;
 import com.arwinata.am.skripsi.Retrofit.model.Poin;
 import com.arwinata.am.skripsi.Retrofit.model.Tabungan;
@@ -11,6 +13,8 @@ import com.arwinata.am.skripsi.Retrofit.model.User;
 import com.arwinata.am.skripsi.Retrofit.model.LoginRequest;
 import com.arwinata.am.skripsi.TukarTiket;
 import com.arwinata.am.skripsi.Voucher;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -56,4 +60,10 @@ public interface UserClient {
 
     @POST("poin")
     Call<Poin> buatPoin(@Body Poin poin);
+
+    @GET("misi")
+    Call<List<Misi>> daftarMisi();
+
+    @PATCH("jalanimisi")
+    Call<JalanimisiItem> updateJalaniMisi(@Body String user, String misi);
 }

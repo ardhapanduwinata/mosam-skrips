@@ -14,15 +14,9 @@ const userSchema = mongoose.Schema({
         type: Number,
         default: 0
     },
-    jmlbotolA: {
-        type: Number,
-    },
-    jmlbotolB: {
-        type: Number,
-    },
-    jmlgelas: {
-        type: Number,
-    },
+    terminal: {
+        type: String
+    }
 });
 
-module.exports = mongoose.model('transaksiTukarVoucher', userSchema);
+module.exports = mongoose.model('transaksiNaikBis', userSchema);

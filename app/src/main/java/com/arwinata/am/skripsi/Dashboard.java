@@ -88,6 +88,15 @@ public class Dashboard extends AppCompatActivity{
                 finish();
             }
         });
+
+        misi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(Dashboard.this, Mission.class);
+                startActivity(i);
+                finish();
+            }
+        });
     }
 
     public void cekuser(String idUser, final Context context) {

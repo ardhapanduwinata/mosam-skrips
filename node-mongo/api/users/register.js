@@ -51,7 +51,7 @@ router.post("/", (req, res, next) => {
                             message: "Anda berhasil terdaftar, silahkan login terlebih dahulu",
                             email: result.email,
                             name: result.name,
-                            _id: result._id,
+                            id: result._id,
                             level: result.level,
                         })
                     })
