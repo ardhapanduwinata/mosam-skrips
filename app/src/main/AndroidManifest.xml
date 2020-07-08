@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ItemMisi"></activity>
+        <activity android:name=".MisiAdapter"></activity>
         <activity android:name=".TukarTiket" />
         <activity android:name=".bankActivity.QrCodeScanner" />
         <activity android:name=".bankActivity.NambahTabungan" />
@@ -23,7 +23,9 @@
         <activity android:name=".Notifikasi" />
         <activity android:name=".Dashboard" />
         <activity android:name=".Voucher" />
-        <activity android:name=".Mission" />
+        <activity android:name=".Mission" >
+
+        </activity>
         <activity android:name=".Register" />
         <activity android:name=".Login" />
         <activity android:name=".MainActivity">

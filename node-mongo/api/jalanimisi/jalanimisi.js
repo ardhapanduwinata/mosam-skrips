@@ -124,14 +124,14 @@ router.post("/", (req, res, next) => {
 });
 
 router.delete("/:id", (req, res, next) => {
-    const id = req.params.id;
-    JalaniMisi.deleteOne({
-            _id: id
+    const user = req.params.id;
+    JalaniMisi.deleteMany({
+            user: user
         })
         .exec()
         .then(result => {
             res.status(200).json({
-                message: "Misi telah terhapus"
+                message: "Misi milik user tersebut telah terhapus"
             })
         })
         .catch((err) => {

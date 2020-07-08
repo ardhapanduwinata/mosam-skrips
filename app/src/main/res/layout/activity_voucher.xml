@@ -365,6 +365,19 @@
     </LinearLayout>
 
     <Button
+        android:id="@+id/btnnaikbis"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/kontak"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="20dp"
+        android:padding="15dp"
+        android:text="Naik Bis"
+        android:background="@drawable/button_bg_transparent_black"/>
+
+
+    <Button
         android:id="@+id/btntukarsticker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

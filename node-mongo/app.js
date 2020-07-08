@@ -18,6 +18,7 @@ const tukarvoucher = require("./api/tukar_voucher/tukarvoucher");
 const poin = require("./api/poin/poin");
 const misi = require("./api/misi/misi");
 const jalanimisi = require("./api/jalanimisi/jalanimisi");
+const terminal = require("./api/terminal/terminal");
 
 mongoose.connect(
     "mongodb+srv://root:" +
@@ -62,7 +63,8 @@ app.use("/voucher", voucher);
 app.use("/tukarvoucher", tukarvoucher);
 app.use("/poin", poin);
 app.use("/misi", misi);
-app.use("/jalanimisi", jalanimisi)
+app.use("/jalanimisi", jalanimisi);
+app.use("/terminal", terminal);
 
 app.use((req, res, next) => {
     const error = new Error("Not Found");

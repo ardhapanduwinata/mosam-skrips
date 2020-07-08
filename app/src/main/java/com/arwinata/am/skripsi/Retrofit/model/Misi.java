@@ -1,32 +1,25 @@
 package com.arwinata.am.skripsi.Retrofit.model;
 
-import com.google.gson.annotations.SerializedName;
-
 public class Misi{
-
-	@SerializedName("jumlahpoin")
-	private String jumlahpoin;
-
-	@SerializedName("tabeldibutuhkan")
+	private int jumlahpoin;
 	private String tabeldibutuhkan;
-
-	@SerializedName("detailmisi")
 	private String detailmisi;
-
-	@SerializedName("targetcapaian")
 	private int targetcapaian;
-
-	@SerializedName("__v")
 	private int V;
-
-	@SerializedName("_id")
 	private String id;
 
-	public String getJumlahpoin(){
+	public int getJumlahpoin(){
 		return jumlahpoin;
 	}
 
-	public String getTabeldibutuhkan(){
+    public Misi(String detailmisi, int targetcapaian, int jumlahpoin, String tabeldibutuhkan) {
+        this.detailmisi = detailmisi;
+        this.targetcapaian = targetcapaian;
+        this.jumlahpoin = jumlahpoin;
+        this.tabeldibutuhkan = tabeldibutuhkan;
+    }
+
+    public String getTabeldibutuhkan(){
 		return tabeldibutuhkan;
 	}
 
