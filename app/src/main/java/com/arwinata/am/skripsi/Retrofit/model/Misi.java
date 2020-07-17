@@ -5,7 +5,6 @@ public class Misi{
 	private String tabeldibutuhkan;
 	private String detailmisi;
 	private int targetcapaian;
-	private int V;
 	private String id;
 
 	public int getJumlahpoin(){
@@ -29,10 +28,6 @@ public class Misi{
 
 	public int getTargetcapaian(){
 		return targetcapaian;
-	}
-
-	public int getV(){
-		return V;
 	}
 
 	public String getId(){

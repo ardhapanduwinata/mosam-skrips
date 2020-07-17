@@ -13,12 +13,15 @@ const registerRoutes = require("./api/users/register");
 const updateProfile = require("./api/users/updateProfile");
 const tabungan = require("./api/tabungan/tabungan");
 const nabung = require("./api/transaksi_nabung/nabung");
-const voucher = require("./api/voucher/voucher");
-const tukarvoucher = require("./api/tukar_voucher/tukarvoucher");
+const tiket = require("./api/tiket/tiket");
+const tukartiket = require("./api/tukar_tiket/tukartiket");
 const poin = require("./api/poin/poin");
 const misi = require("./api/misi/misi");
 const jalanimisi = require("./api/jalanimisi/jalanimisi");
 const terminal = require("./api/terminal/terminal");
+const histori = require("./api/history/history");
+const naikbis = require("./api/naikbis/naikbis");
+const lencana = require("./api/lencana/lencana");
 
 mongoose.connect(
     "mongodb+srv://root:" +
@@ -59,12 +62,15 @@ app.use("/register", registerRoutes);
 app.use("/updateProfile", updateProfile);
 app.use("/tabungan", tabungan);
 app.use("/nabung", nabung);
-app.use("/voucher", voucher);
-app.use("/tukarvoucher", tukarvoucher);
+app.use("/tiket", tiket);
+app.use("/tukartiket", tukartiket);
 app.use("/poin", poin);
 app.use("/misi", misi);
 app.use("/jalanimisi", jalanimisi);
 app.use("/terminal", terminal);
+app.use("/histori", histori);
+app.use("/naikbis", naikbis);
+app.use("/lencana", lencana);
 
 app.use((req, res, next) => {
     const error = new Error("Not Found");
@@ -80,12 +86,5 @@ app.use((error, req, res, next) => {
         }
     });
 });
-
-// app.use((req, res, next) => {
-//    console.log('ini jalan gak?');
-//     res.status(200).json({
-//         message: 'It works!'
-//     });
-// });
 
 module.exports = app;

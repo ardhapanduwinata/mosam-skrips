@@ -11,7 +11,7 @@ router.post("/", (req, res, next) => {
     })
     .exec()
     .then((doc) => {
-      console.log("From database", doc);
+      // console.log("From database", doc);
       if (!doc) {
         return res.status(404).json({
           message: "Email anda salah",
@@ -44,12 +44,12 @@ router.post("/", (req, res, next) => {
 });
 
 router.get("/:userId", (req, res, next) => {
-  const id = req.params.userId;
+  const id = mongooose.Types.ObjectId(req.params.userId);
   User.findById(id)
     .select("_id email name")
     .exec()
     .then(doc => {
-      console.log("from database ", doc);
+      // console.log("from database ", doc);
       if (doc) {
         res.status(200).json({
           _id: doc._id,

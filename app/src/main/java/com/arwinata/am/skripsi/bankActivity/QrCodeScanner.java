@@ -53,8 +53,6 @@ public class QrCodeScanner extends AppCompatActivity implements ZXingScannerView
 //        builder.setMessage(hasil);
 //        AlertDialog alert1 = builder.create();
 //        alert1.show();
-
-
         mScannerView.resumeCameraPreview(this);
     }
 }

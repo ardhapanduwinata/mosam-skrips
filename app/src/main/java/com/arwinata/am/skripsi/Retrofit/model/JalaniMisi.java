@@ -1,16 +1,59 @@
 package com.arwinata.am.skripsi.Retrofit.model;
 
-import java.util.List;
-
 public class JalaniMisi{
-	private int count;
-	private List<JalanimisiItem> jalanimisi;
+	private String misi;
+	private String user;
+	private int targettercapai;
+	private String status;
+	private String message;
+	private String claimpoin;
+	private String dateselesai;
 
-	public int getCount(){
-		return count;
+    public String getClaimpoin() {
+        return claimpoin;
+    }
+
+    public String getMessage() {
+		return message;
 	}
 
-	public List<JalanimisiItem> getJalanimisi(){
-		return jalanimisi;
+	public JalaniMisi(String user, String misi, String status, String claimpoin) {
+		this.misi = misi;
+		this.user = user;
+		this.status = status;
+		this.claimpoin = claimpoin;
+	}
+
+	public String getMisi(){
+		return misi;
+	}
+
+	public String getUser(){
+		return user;
+	}
+
+	public int getTargettercapai(){
+		return targettercapai;
+	}
+
+	public String getDateselesai() {
+		return dateselesai;
+	}
+
+	public JalaniMisi(String user, String misi, String status, String claimpoin, String dateselesai) {
+		this.misi = misi;
+		this.user = user;
+		this.status = status;
+		this.claimpoin = claimpoin;
+		this.dateselesai = dateselesai;
+	}
+
+	public JalaniMisi(String user, String misi) {
+		this.misi = misi;
+		this.user = user;
+	}
+
+	public String getStatus(){
+		return status;
 	}
 }

@@ -15,7 +15,9 @@ router.get("/", (req, res, next) => {
                         user: doc.user,
                         misi: doc.misi,
                         targettercapai: doc.targettercapai,
-                        status: doc.status
+                        status: doc.status,
+                        dateselesai: doc.dateselesai,
+                        claimpoin: doc.claimpoin
                     }
                 })
             }
@@ -30,22 +32,23 @@ router.get("/", (req, res, next) => {
 });
 
 router.get("/:user", (req, res, next) => {
-    const user = req.params.user;
     JalaniMisi.find({
-            user: user
+            user: mongooose.Types.ObjectId(req.params.user)
         })
         .populate("misi user")
         .exec()
         .then(doc => {
-            console.log("from database ", doc);
+            // console.log("from database ", doc);
             const response = {
                 count: doc.length,
-                TansaksiNabung: doc.map(doc => {
+                misiUser: doc.map(doc => {
                     return {
                         user: doc.user,
-                        misi: doc.misi.detailmisi,
+                        misi: doc.misi,
                         targettercapai: doc.targettercapai,
-                        status: doc.status
+                        status: doc.status,
+                        dateselesai: doc.dateselesai,
+                        claimpoin: doc.claimpoin
                     }
                 })
             }
@@ -59,20 +62,27 @@ router.get("/:user", (req, res, next) => {
         });
 });
 
-router.patch("/:id", (req, res, next) => {
-    const id = req.params.id;
+router.patch("/", (req, res, next) => {
+    const idmisi = req.body.misi;
+    const iduser = req.body.user;
 
-    JalaniMisi.findOne({
-            _id: id
+    JalaniMisi.find().where({
+            user: mongooose.Types.ObjectId(iduser)
+        }).where({
+            misi: mongooose.Types.ObjectId(idmisi)
         })
         .exec()
         .then(result => {
-            console.log(result);
-
-            JalaniMisi.updateMany({
-                    _id: id
+            // console.log(result);
+            JalaniMisi.updateOne({
+                    user: mongooose.Types.ObjectId(iduser),
+                    misi: mongooose.Types.ObjectId(idmisi)
                 }, {
-                    $set: req.body
+                    $set: {
+                        status: req.body.status,
+                        claimpoin: req.body.claimpoin,
+                        dateselesai: req.body.dateselesai
+                    }
                 })
                 .exec()
                 .then(doc => {
@@ -97,10 +107,11 @@ router.patch("/:id", (req, res, next) => {
 
 router.post("/", (req, res, next) => {
     const jalanimisi = new JalaniMisi({
-        misi: req.body.misi,
-        user: req.body.user,
+        misi: mongooose.Types.ObjectId(req.body.misi),
+        user: mongooose.Types.ObjectId(req.body.user),
         targettercapai: req.body.targettercapai,
-        status: req.body.status
+        status: req.body.status,
+        claimpoin: req.body.claimpoin
     })
 
     jalanimisi.save()

@@ -29,6 +29,26 @@
     </TextView>
 
     <ImageView
+        android:id="@+id/ivSettingDash"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="27dp"
+        android:layout_marginRight="20dp"
+        android:layout_below="@id/buttonLogout_dash"
+        android:layout_toLeftOf="@+id/ivreload"
+        android:background="@drawable/gear"/>
+
+    <ImageView
+        android:id="@+id/ivreload"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="27dp"
+        android:layout_marginRight="30dp"
+        android:layout_below="@id/buttonLogout_dash"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/reload"/>
+
+    <ImageView
         android:id="@+id/imgUser_main"
         android:layout_width="60dp"
         android:layout_height="60dp"
@@ -39,14 +59,27 @@
     </ImageView>
 
     <TextView
-        android:id="@+id/tvNamaUser_dash"
+        android:id="@+id/tvhelo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/imgUser_main"
         android:layout_below="@+id/tvMosam"
         android:layout_marginTop="35dp"
         android:layout_marginLeft="20dp"
-        android:text="Hallo, Username Pengguna"
+        android:text="Hallo"
+        android:textSize="15sp">
+    </TextView>
+
+    <TextView
+        android:id="@+id/tvNamaUser_dash"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/tvhelo"
+        android:layout_below="@+id/tvMosam"
+        android:layout_marginTop="35dp"
+        android:layout_marginLeft="3dp"
+        android:textStyle="bold"
+        android:text=""
         android:textSize="15sp">
     </TextView>
 
@@ -137,7 +170,7 @@
         android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/iv15l"
-        android:text="1"
+        android:text=""
         android:layout_alignLeft="@+id/ivNabungFull"
         android:layout_marginLeft="28dp"
         android:layout_marginTop="10dp">
@@ -149,7 +182,7 @@
         android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/iv600ml"
-        android:text="1"
+        android:text=""
         android:layout_alignLeft="@+id/tvJml15l"
         android:layout_marginLeft="78dp"
         android:layout_marginTop="10dp">
@@ -161,13 +194,14 @@
         android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/iv300ml"
-        android:text="1"
+        android:text=""
         android:layout_alignLeft="@+id/tvJml600ml"
         android:layout_marginLeft="73dp"
         android:layout_marginTop="15dp">
     </TextView>
 
     <RelativeLayout
+        android:id="@+id/card"
         android:layout_width="wrap_content"
         android:layout_height="260dp"
         android:layout_alignTop="@+id/ivNabungFull"
@@ -189,46 +223,95 @@
         </TextView>
     </RelativeLayout>
 
-    <RelativeLayout
+    <LinearLayout
+        android:id="@+id/duobutton"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_alignParentBottom="true"
-        android:background="@color/colorPrimary">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:layout_below="@+id/card">
 
-        <ImageView
-            android:id="@+id/ivHome"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="20dp"
-            android:background="@drawable/home"/>
-
-        <ImageView
+        <LinearLayout
             android:id="@+id/ivBusDash"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="55dp"
-            android:background="@drawable/bus"
-            android:layout_toRightOf="@id/ivHome"/>
+            android:paddingTop="5dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginVertical="15dp"
+            android:orientation="vertical"
+            android:background="@drawable/blueroundedbg"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_below="@id/card"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="-3dp"
+                android:layout_marginBottom="3dp"
+                android:layout_centerVertical="true"
+                android:background="@drawable/bus"/>
 
-        <ImageView
+            <TextView
+                android:textAlignment="center"
+                android:textSize="15dp"
+                android:textStyle="bold"
+                android:layout_marginBottom="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tukar Tiket"/>
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/ivMisiDash"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="55dp"
-            android:layout_toLeftOf="@+id/ivSettingDash"
-            android:background="@drawable/mission"/>
-
-        <ImageView
-            android:id="@+id/ivSettingDash"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
+            android:paddingTop="5dp"
+            android:orientation="vertical"
+            android:layout_marginLeft="10dp"
             android:layout_marginRight="20dp"
-            android:background="@drawable/account"/>
-    </RelativeLayout>
+            android:layout_marginVertical="15dp"
+            android:background="@drawable/blueroundedbg"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_below="@id/card"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerVertical="true"
+                android:background="@drawable/mission"/>
+            <TextView
+                android:textAlignment="center"
+                android:textSize="15dp"
+                android:textStyle="bold"
+                android:layout_marginBottom="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Misi Anda"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvhistori"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:textSize="15dp"
+        android:textStyle="bold"
+        android:layout_marginHorizontal="25dp"
+        android:layout_below="@+id/duobutton"
+        android:text="Histori Transaksi Anda:">
+    </TextView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/lvhistori"
+        android:paddingVertical="5dp"
+        android:paddingHorizontal="10dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_below="@id/tvhistori"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/roundbg">
+    </androidx.recyclerview.widget.RecyclerView>
 
 </RelativeLayout>

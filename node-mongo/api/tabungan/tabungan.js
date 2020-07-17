@@ -33,11 +33,11 @@ router.get("/", (req, res, next) => {
 router.get("/:user", (req, res, next) => {
     const userId = req.params.user;
     Tabungan.findOne({
-            user: userId
+            user: mongooose.Types.ObjectId(userId)
         })
         .exec()
         .then((doc) => {
-            console.log("From database", doc);
+            // console.log("From database", doc);
             if (!doc) {
                 return res.status(404).json({
                     message: "Tabungan tidak ditemukan!",
@@ -65,7 +65,7 @@ router.patch("/:user", (req, res, next) => {
     const id = req.params.user;
 
     Tabungan.findOne({
-            user: id
+            user: mongooose.Types.ObjectId(id)
         })
         .exec()
         .then(result => {
@@ -99,7 +99,7 @@ router.patch("/:user", (req, res, next) => {
 router.post("/", (req, res, next) => {
     const tabungan = new Tabungan({
         _id: new mongooose.Types.ObjectId(),
-        user: req.body.user,
+        user: mongooose.Types.ObjectId(req.body.user),
         jmlbotolA: req.body.jmlbotolA,
         jmlbotolB: req.body.jmlbotolB,
         jmlgelas: req.body.jmlgelas
@@ -129,7 +129,7 @@ router.post("/", (req, res, next) => {
 router.delete("/:idUser", (req, res, next) => {
     const user = req.params.idUser;
     Tabungan.deleteOne({
-            user: user
+            user: mongooose.Types.ObjectId(user)
         })
         .exec()
         .then(result => {

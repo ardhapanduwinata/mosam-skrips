@@ -46,6 +46,8 @@ public class QrCode extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), Dashboard.class);
+                startActivity(i);
                 finish();
             }
         });

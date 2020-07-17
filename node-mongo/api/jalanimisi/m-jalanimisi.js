@@ -15,7 +15,16 @@ const userSchema = mongoose.Schema({
         type: Number,
         default: 0
     },
+    dateselesai: {
+        type: String,
+        default: "00/00/0000"
+    },
     status: {
+        type: String,
+        default: "belum",
+        require: true
+    },
+    claimpoin: {
         type: String,
         default: "belum",
         require: true
