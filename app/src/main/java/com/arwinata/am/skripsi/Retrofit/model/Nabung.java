@@ -27,9 +27,23 @@ public class Nabung {
     private int jmlgelas;
 
     @SerializedName("date")
-    private Date date;
+    private String date;
 
-    public Nabung(String user, String bank, int jmlbotolA, int jmlbotolB, int jmlgelas, Date date) {
+    @SerializedName("TransaksiNabung")
+    private String transaksinabung;
+
+    @SerializedName("count")
+    private int count;
+
+    public int getCount() {
+        return count;
+    }
+
+    public String getTransaksinabung() {
+        return transaksinabung;
+    }
+
+    public Nabung(String user, String bank, int jmlbotolA, int jmlbotolB, int jmlgelas, String date) {
         this.user = user;
         this.bank = bank;
         this.jmlbotolA = jmlbotolA;
@@ -49,6 +63,8 @@ public class Nabung {
     public String getBank() {
         return bank;
     }
+
+    public String getDate() { return date; }
 
     public int getJmlbotolA() {
         return jmlbotolA;

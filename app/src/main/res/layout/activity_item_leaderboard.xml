@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+
+        android:layout_margin="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/ivbadge"
+            android:layout_marginVertical="5dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@color/abu"/>
+
+        <LinearLayout
+            android:layout_marginLeft="10dp"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tvnamauser"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nama Nasabah"
+                android:textSize="20dp"/>
+
+            <TextView
+                android:id="@+id/tvbadge"
+                android:layout_marginTop="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="badge"
+                android:textSize="17dp"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

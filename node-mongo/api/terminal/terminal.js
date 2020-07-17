@@ -56,23 +56,19 @@ router.post("/", (req, res, next) => {
 
 router.get("/:id", (req, res, next) => {
     const id = req.params.id;
-    Terminal.find().where({
-            _id: id
-        })
+    Terminal.findById(id)
         .then(doc => {
             console.log("from database ", doc);
-
             res.status(200).json({
-                id: doc._id,
+                // id: doc._id,
                 namaTerminal: doc.namaTerminal,
                 alamatTerminal: doc.alamatTerminal
             });
-
         })
         .catch(err => {
             console.log(err);
             res.status(500).json({
-                error: err
+                message: "Data Terminal tidak ditemukan",
             });
         })
 })

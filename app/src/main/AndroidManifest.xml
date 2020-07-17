@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    android:theme="@style/Theme.AppCompat.Light"
     package="com.arwinata.am.skripsi">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -7,13 +8,14 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/stickertiket"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".MisiAdapter"></activity>
+        <activity android:name=".Leaderboard"></activity>
+        <activity android:name=".MisiAdapter" />
         <activity android:name=".TukarTiket" />
         <activity android:name=".bankActivity.QrCodeScanner" />
         <activity android:name=".bankActivity.NambahTabungan" />
@@ -22,10 +24,9 @@
         <activity android:name=".QrCode" />
         <activity android:name=".Notifikasi" />
         <activity android:name=".Dashboard" />
-        <activity android:name=".Voucher" />
-        <activity android:name=".Mission" >
-
-        </activity>
+        <activity android:name=".Tiket" />
+        <activity android:name=".Mission" />
+        <activity android:name=".ScanTerminal"></activity>
         <activity android:name=".Register" />
         <activity android:name=".Login" />
         <activity android:name=".MainActivity">

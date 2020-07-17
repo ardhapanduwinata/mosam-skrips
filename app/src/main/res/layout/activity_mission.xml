@@ -6,6 +6,36 @@
     android:layout_height="match_parent"
     tools:context=".Mission">
 
+    <LinearLayout
+        android:id="@+id/leaderboard"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
+        android:layout_marginLeft="20dp">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:background="@drawable/graph"/>
+            <TextView
+                android:layout_marginTop="12dp"
+                android:layout_marginLeft="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Leaderboard"/>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="(Fitur ini belum tersedia)"
+            android:textSize="10dp"/>
+    </LinearLayout>
+
     <Button
         android:id="@+id/btn_back"
         android:layout_width="100dp"
@@ -38,18 +68,24 @@
             android:layout_height="match_parent">
 
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="(Fitur ini belum tersedia)"
+                android:textSize="10dp"/>
+            <TextView
                 android:layout_marginHorizontal="-5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
-                android:text="Voucher anda:"
+                android:text="Voucher"
                 android:textSize="20dp"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:textSize="20dp"
-                android:text="0"/>
+<!--            <TextView-->
+<!--                android:id="@+id/tvjmlvoucher"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:textColor="@color/black"-->
+<!--                android:textSize="20dp"-->
+<!--                android:text=""/>-->
         </LinearLayout>
 
         <View
@@ -72,12 +108,14 @@
                 android:textColor="@color/black"
                 android:text="Poin Anda:"
                 android:textSize="20dp"/>
+
             <TextView
+                android:id="@+id/tvjmlpoin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text=""
                 android:textColor="@color/black"
-                android:textSize="20dp"
-                android:text="0"/>
+                android:textSize="20dp" />
         </LinearLayout>
 
     </LinearLayout>
@@ -85,13 +123,13 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/lvmisi"
         android:paddingVertical="5dp"
-        android:layout_marginVertical="10dp"
+        android:layout_marginTop="20dp"
         android:paddingHorizontal="10dp"
         android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="20dp"
         android:layout_below="@id/datamisi"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/roundbg">
 
     </androidx.recyclerview.widget.RecyclerView>

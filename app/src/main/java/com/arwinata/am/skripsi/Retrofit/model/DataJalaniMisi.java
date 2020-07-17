@@ -9,13 +9,13 @@ public class DataJalaniMisi{
 	private int count;
 
 	@SerializedName("jalanimisi")
-	private List<JalanimisiItem> jalanimisi;
+	private List<JalaniMisi> jalanimisi;
 
 	public int getCount(){
 		return count;
 	}
 
-	public List<JalanimisiItem> getJalanimisi(){
+	public List<JalaniMisi> getJalanimisi(){
 		return jalanimisi;
 	}
 }

@@ -1,18 +1,19 @@
 package com.arwinata.am.skripsi.Retrofit.service;
 
-import com.arwinata.am.skripsi.Retrofit.model.DataVoucher;
+import com.arwinata.am.skripsi.HistoriAdapter;
+import com.arwinata.am.skripsi.Retrofit.model.DataTiket;
 import com.arwinata.am.skripsi.Retrofit.model.EditProfileReq;
-import com.arwinata.am.skripsi.Retrofit.model.JalanimisiItem;
+import com.arwinata.am.skripsi.Retrofit.model.HistoriTransaksi;
+import com.arwinata.am.skripsi.Retrofit.model.JalaniMisi;
 import com.arwinata.am.skripsi.Retrofit.model.Misi;
 import com.arwinata.am.skripsi.Retrofit.model.Nabung;
-import com.arwinata.am.skripsi.Retrofit.model.Poin;
+import com.arwinata.am.skripsi.Retrofit.model.PoinDanVoucher;
 import com.arwinata.am.skripsi.Retrofit.model.Tabungan;
-import com.arwinata.am.skripsi.Retrofit.model.TukarVoucher;
+import com.arwinata.am.skripsi.Retrofit.model.DataTukarTiket;
+import com.arwinata.am.skripsi.Retrofit.model.Terminal;
 import com.arwinata.am.skripsi.Retrofit.model.UserResponse;
 import com.arwinata.am.skripsi.Retrofit.model.User;
 import com.arwinata.am.skripsi.Retrofit.model.LoginRequest;
-import com.arwinata.am.skripsi.TukarTiket;
-import com.arwinata.am.skripsi.Voucher;
 
 import java.util.List;
 
@@ -46,24 +47,48 @@ public interface UserClient {
     @POST("nabung")
     Call<Nabung> transaksiNabung(@Body Nabung nabung);
 
-    @PATCH("voucher/{id}")
-    Call<DataVoucher> updateVoucher(@Path("id") String id, @Body DataVoucher jmlVoucher);
+    @PATCH("tiket/{id}")
+    Call<DataTiket> updateTiket(@Path("id") String id, @Body DataTiket jmlVoucher);
 
-    @GET("voucher/{id}")
-    Call<DataVoucher> cekVoucher(@Path("id") String id);
+    @GET("tiket/{id}")
+    Call<DataTiket> cekTiket(@Path("id") String id);
 
-    @POST("voucher")
-    Call<DataVoucher> buatVoucher(@Body DataVoucher voucher);
+    @POST("tiket")
+    Call<DataTiket> buatTiket(@Body DataTiket voucher);
 
-    @POST("tukarvoucher")
-    Call<TukarVoucher> tukarVoucher( @Body TukarVoucher tukarVoucher);
+    @POST("tukartiket")
+    Call<DataTukarTiket> tukarTiket(@Body DataTukarTiket dataTukarTiket);
+
+    @GET("poin/{id}")
+    Call<PoinDanVoucher> cekPoin(@Path("id") String id);
 
     @POST("poin")
-    Call<Poin> buatPoin(@Body Poin poin);
+    Call<PoinDanVoucher> buatPoin(@Body PoinDanVoucher poinDanVoucher);
+
+    @PATCH("poin/{id}")
+    Call<PoinDanVoucher> updatePoin(@Path("id") String id, @Body PoinDanVoucher poinDanVoucher);
 
     @GET("misi")
     Call<List<Misi>> daftarMisi();
 
+    @POST("jalanimisi")
+    Call<JalaniMisi> buatJalaniMisi(@Body JalaniMisi jalaniMisi);
+
     @PATCH("jalanimisi")
-    Call<JalanimisiItem> updateJalaniMisi(@Body String user, String misi);
+    Call<JalaniMisi> updateJalaniMisi(@Body JalaniMisi jalanimisi);
+
+    @GET("nabung/{id}")
+    Call<Nabung> getAllNabung(@Path("id") String id);
+
+    @GET("tukartiket/{id}")
+    Call<DataTukarTiket> getAllTukarTiket(@Path("id") String id);
+
+    @GET("terminal/{id}")
+    Call<Terminal> cekTerminal(@Path("id") String id);
+
+    @POST("naikbis")
+    Call<Terminal> naikbis(@Body Terminal terminal);
+
+    @POST("histori")
+    Call<HistoriTransaksi> addHistori(@Body HistoriTransaksi historiTransaksi);
 }

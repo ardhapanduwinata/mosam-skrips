@@ -25,6 +25,7 @@ import com.arwinata.am.skripsi.Retrofit.model.User;
 import com.arwinata.am.skripsi.Retrofit.model.UserResponse;
 import com.arwinata.am.skripsi.Retrofit.service.SharedPrefManager;
 import com.arwinata.am.skripsi.Retrofit.service.UserClient;
+import com.arwinata.am.skripsi.bankActivity.BankDashboard;
 
 public class UserSetting extends AppCompatActivity {
 
@@ -42,7 +43,13 @@ public class UserSetting extends AppCompatActivity {
         sharedPrefManager = new SharedPrefManager(this);
         ck = new CheckingConnection();
 
-        cekuser(sharedPrefManager.getSP_iduser(), this);
+        if(sharedPrefManager.getSP_level().equals("satu")){
+            cekuser(sharedPrefManager.getSP_idbank(), this);
+        } else if (sharedPrefManager.getSP_level().equals("dua")){
+            cekuser(sharedPrefManager.getSP_iduser(), this);
+        }
+
+
 
         edtusername = findViewById(R.id.edusername_setting);
         edtemail = findViewById(R.id.edemail_setting);

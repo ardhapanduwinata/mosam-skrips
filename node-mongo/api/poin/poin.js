@@ -15,7 +15,6 @@ router.get("/", (req, res, next) => {
                         _id: doc._id,
                         userId: doc.user,
                         jmlPoin: doc.jmlPoin,
-                        badge: doc.badge
                     }
                 })
             }
@@ -36,7 +35,7 @@ router.get("/:user", (req, res, next) => {
         })
         .exec()
         .then((doc) => {
-            console.log("From database", doc);
+            // console.log("From database", doc);
             if (!doc) {
                 return res.status(404).json({
                     message: "Data Poin tidak ditemukan!",
@@ -47,7 +46,7 @@ router.get("/:user", (req, res, next) => {
                     _id: doc._id,
                     userId: doc.user,
                     jmlPoin: doc.jmlPoin,
-                    badge: doc.badge
+                    jmlVoucher: doc.jmlVoucher,
                 });
             }
         })
@@ -62,30 +61,17 @@ router.get("/:user", (req, res, next) => {
 router.patch("/:user", (req, res, next) => {
     const id = req.params.user;
 
-    Poin.findOne({
-            user: id
+    Poin.updateOne({
+            user: mongooose.Types.ObjectId(id)
+        }, {
+            $set: req.body
         })
         .exec()
-        .then(result => {
-            console.log(result);
-
-            Poin.updateMany({
-                    user: id
-                }, {
-                    $set: req.body
-                })
-                .exec()
-                .then(doc => {
-                    res.status(200).json({
-                        message: "Data berhasil di Update!"
-                    })
-                })
-                .catch(err => {
-                    console.log(err);
-                    res.status(500).json({
-                        error: err
-                    })
-                })
+        .then(doc => {
+            res.status(200).json({
+                message: "Data berhasil di Update!",
+                jmlPoin: req.body.jmlPoin
+            })
         })
         .catch(err => {
             console.log(err);
@@ -98,7 +84,7 @@ router.patch("/:user", (req, res, next) => {
 router.post("/", (req, res, next) => {
     const poin = new Poin({
         _id: new mongooose.Types.ObjectId(),
-        user: req.body.user,
+        user: mongooose.Types.ObjectId(req.body.user),
         jmlPoin: req.body.jmlPoin
     })
 
@@ -109,8 +95,7 @@ router.post("/", (req, res, next) => {
                 message: "Tabungan Poin berhasil dibuat!",
                 idTabungan: doc._id,
                 idUser: doc.user,
-                jmlPoin: doc.jmlPoin,
-                badge: doc.badge
+                jmlPoin: doc.jmlPoin
             })
         })
         .catch(err => {

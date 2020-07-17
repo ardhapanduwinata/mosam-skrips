@@ -71,17 +71,17 @@ public class Login extends AppCompatActivity {
     private void loginConnection(LoginRequest loginRequest) {
 
         //membuat okhttp client
-        OkHttpClient.Builder okhttp = new OkHttpClient.Builder();
-
-        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
-        okhttp.addInterceptor(logging);
+//        OkHttpClient.Builder okhttp = new OkHttpClient.Builder();
+//
+//        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+//        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+//        okhttp.addInterceptor(logging);
 
         //membuat instance retrofit
         Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl(ck.getBASE_URL())
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(okhttp.build());
+                .addConverterFactory(GsonConverterFactory.create());
+//                .client(okhttp.build());
 
         Retrofit retrofit = builder.build();
 

@@ -16,13 +16,23 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.arwinata.am.skripsi.Retrofit.CheckingConnection;
-import com.arwinata.am.skripsi.Retrofit.model.Poin;
+import com.arwinata.am.skripsi.Retrofit.model.JalaniMisi;
+import com.arwinata.am.skripsi.Retrofit.model.PoinDanVoucher;
 import com.arwinata.am.skripsi.Retrofit.model.Tabungan;
 import com.arwinata.am.skripsi.Retrofit.model.User;
-import com.arwinata.am.skripsi.Retrofit.model.DataVoucher;
+import com.arwinata.am.skripsi.Retrofit.model.DataTiket;
 import com.arwinata.am.skripsi.Retrofit.service.SharedPrefManager;
 import com.arwinata.am.skripsi.Retrofit.service.UserClient;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class Register extends AppCompatActivity {
 
@@ -73,17 +83,17 @@ public class Register extends AppCompatActivity {
     private void sendNetworkRequest(User user) {
 
         //membuat okhttp client
-        OkHttpClient.Builder okhttp = new OkHttpClient.Builder();
-
-        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
-        okhttp.addInterceptor(logging);
+//        OkHttpClient.Builder okhttp = new OkHttpClient.Builder();
+//
+//        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+//        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+//        okhttp.addInterceptor(logging);
 
         //membuat instance retrofit
         final Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl(ck.getBASE_URL())
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(okhttp.build());
+                .addConverterFactory(GsonConverterFactory.create());
+//                .client(okhttp.build());
 
         final Retrofit retrofit = builder.build();
 
@@ -104,8 +114,9 @@ public class Register extends AppCompatActivity {
 
                     String user = response.body().getId();
                     buattabungan(user);
-                    buatvoucher(user);
+                    buattiket(user);
                     buatpoin(user);
+                    buatjalanimisi(user);
                     Intent i = new Intent(Register.this, Login.class);
                     startActivity(i);
                     overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
@@ -123,17 +134,17 @@ public class Register extends AppCompatActivity {
 
     public void buattabungan(String iduser){
         //membuat okhttp client
-        OkHttpClient.Builder okhttp = new OkHttpClient.Builder();
-
-        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
-        okhttp.addInterceptor(logging);
+//        OkHttpClient.Builder okhttp = new OkHttpClient.Builder();
+//
+//        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+//        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+//        okhttp.addInterceptor(logging);
 
         //membuat instance retrofit
         Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl(ck.getBASE_URL())
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(okhttp.build());
+                .addConverterFactory(GsonConverterFactory.create());
+//                .client(okhttp.build());
 
         Retrofit retrofit = builder.build();
 
@@ -154,35 +165,35 @@ public class Register extends AppCompatActivity {
         });
     }
 
-    public void buatvoucher(String idUser){
+    public void buattiket(String idUser){
         //membuat okhttp client
-        OkHttpClient.Builder okhttp = new OkHttpClient.Builder();
-
-        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
-        okhttp.addInterceptor(logging);
+//        OkHttpClient.Builder okhttp = new OkHttpClient.Builder();
+//
+//        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+//        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+//        okhttp.addInterceptor(logging);
 
         //membuat instance retrofit
         Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl(ck.getBASE_URL())
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(okhttp.build());
+                .addConverterFactory(GsonConverterFactory.create());
+//                .client(okhttp.build());
 
         Retrofit retrofit = builder.build();
 
-        DataVoucher voucherbaru = new DataVoucher(idUser, 0);
+        DataTiket voucherbaru = new DataTiket(idUser, 0);
 
         final UserClient client = retrofit.create(UserClient.class);
-        Call<DataVoucher> newVoucher = client.buatVoucher(voucherbaru);
+        Call<DataTiket> newVoucher = client.buatTiket(voucherbaru);
 
-        newVoucher.enqueue(new Callback<DataVoucher>() {
+        newVoucher.enqueue(new Callback<DataTiket>() {
             @Override
-            public void onResponse(Call<DataVoucher> call, Response<DataVoucher> response) {
+            public void onResponse(Call<DataTiket> call, Response<DataTiket> response) {
 
             }
 
             @Override
-            public void onFailure(Call<DataVoucher> call, Throwable t) {
+            public void onFailure(Call<DataTiket> call, Throwable t) {
                 Toast.makeText(Register.this, t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
@@ -190,35 +201,95 @@ public class Register extends AppCompatActivity {
 
     public void buatpoin(String idUser){
         //membuat okhttp client
-        OkHttpClient.Builder okhttp = new OkHttpClient.Builder();
-
-        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
-        okhttp.addInterceptor(logging);
+//        OkHttpClient.Builder okhttp = new OkHttpClient.Builder();
+//
+//        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+//        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+//        okhttp.addInterceptor(logging);
 
         //membuat instance retrofit
         Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl(ck.getBASE_URL())
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(okhttp.build());
+                .addConverterFactory(GsonConverterFactory.create());
+//                .client(okhttp.build());
 
         Retrofit retrofit = builder.build();
 
-        Poin voucherbaru = new Poin(idUser);
+        PoinDanVoucher voucherbaru = new PoinDanVoucher(idUser, 0);
 
         final UserClient client = retrofit.create(UserClient.class);
-        Call<Poin> call = client.buatPoin(voucherbaru);
+        Call<PoinDanVoucher> call = client.buatPoin(voucherbaru);
 
-        call.enqueue(new Callback<Poin>() {
+        call.enqueue(new Callback<PoinDanVoucher>() {
             @Override
-            public void onResponse(Call<Poin> call, Response<Poin> response) {
+            public void onResponse(Call<PoinDanVoucher> call, Response<PoinDanVoucher> response) {
 
             }
 
             @Override
-            public void onFailure(Call<Poin> call, Throwable t) {
+            public void onFailure(Call<PoinDanVoucher> call, Throwable t) {
                 Toast.makeText(Register.this, t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public void buatjalanimisi(final String user) {
+        StringRequest stringRequest = new StringRequest(Request.Method.GET,
+                ck.getBASE_URL()+"/misi",
+                new com.android.volley.Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            JSONArray array = jsonObject.getJSONArray("misi");
+
+//                            OkHttpClient.Builder okhttp = new OkHttpClient.Builder();
+//
+//                            HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+//                            logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+//                            okhttp.addInterceptor(logging);
+
+                            //membuat instance retrofit
+                            Retrofit.Builder builder = new Retrofit.Builder()
+                                    .baseUrl(ck.getBASE_URL())
+                                    .addConverterFactory(GsonConverterFactory.create());
+//                                    .client(okhttp.build());
+
+                            Retrofit retrofit = builder.build();
+                            UserClient client = retrofit.create(UserClient.class);
+
+                            for(int i=0; i<array.length(); i++){
+                                JSONObject o = array.getJSONObject(i);
+
+                                String idmisi = o.getString("_id");
+
+                                JalaniMisi newjalanimisi = new JalaniMisi(user, idmisi);
+                                Call<JalaniMisi> call = client.buatJalaniMisi(newjalanimisi);
+
+                                call.enqueue(new Callback<JalaniMisi>() {
+                                    @Override
+                                    public void onResponse(Call<JalaniMisi> call, Response<JalaniMisi> response) {
+
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<JalaniMisi> call, Throwable t) {
+
+                                    }
+                                });
+                            }
+                        } catch (JSONException e){
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new com.android.volley.Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
     }
 }

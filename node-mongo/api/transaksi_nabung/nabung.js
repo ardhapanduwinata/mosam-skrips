@@ -11,11 +11,12 @@ router.get("/", (req, res, next) => {
         .then(docs => {
             const response = {
                 count: docs.length,
-                TansaksiNabung: docs.map(doc => {
+                TransaksiNabung: docs.map(doc => {
                     return {
                         _id: doc._id,
                         bank: doc.bank,
                         user: doc.user,
+                        date: doc.date,
                         jmlbotolA: doc.jmlbotolA,
                         jmlbotolB: doc.jmlbotolB,
                         jmlgelas: doc.jmlgelas
@@ -36,8 +37,8 @@ router.post("/", (req, res, next) => {
 
     const nabung = new Nabung({
         _id: new mongooose.Types.ObjectId(),
-        user: req.body.user,
-        bank: req.body.bank,
+        user: mongooose.Types.ObjectId(req.body.user),
+        bank: mongooose.Types.ObjectId(req.body.bank),
         date: req.body.date,
         jmlbotolA: req.body.jmlbotolA,
         jmlbotolB: req.body.jmlbotolB,
@@ -64,7 +65,11 @@ router.post("/", (req, res, next) => {
                     }).then(hasil => {
                         console.log(hasil);
                         res.status(200).json({
-                            message: "Data tabungan telah ditambahkan!"
+                            message: "Data tabungan telah ditambahkan!",
+                            date: req.body.date,
+                            jmlbotolA: req.body.jmlbotolA,
+                            jmlbotolB: req.body.jmlbotolB,
+                            jmlgelas: req.body.jmlgelas
                         })
                     }).catch(err => res.status(500).json({
                         error: err,
@@ -88,13 +93,13 @@ router.post("/", (req, res, next) => {
 router.get("/:user", (req, res, next) => {
     const user = req.params.user;
     Nabung.find().where({
-            user: user
+            user: mongooose.Types.ObjectId(user)
         })
         .then(doc => {
             console.log("from database ", doc);
             const response = {
                 count: doc.length,
-                TansaksiNabung: doc.map(doc => {
+                TransaksiNabung: doc.map(doc => {
                     return {
                         _id: doc._id,
                         bank: doc.bank,
@@ -107,11 +112,6 @@ router.get("/:user", (req, res, next) => {
                 })
             }
             res.status(200).json(response);
-            // if (!doc) {
-            //     res.status(404).json({
-            //         message: "Tidak ada transaksi nabung"
-            //     });
-            // }
         })
         .catch(err => {
             console.log(err);
@@ -121,15 +121,15 @@ router.get("/:user", (req, res, next) => {
         })
 })
 
-router.delete("/:idTransaksi", (req, res, next) => {
-    const id = req.params.idTransaksi;
-    Nabung.deleteOne({
-            _id: id
+router.delete("/:user", (req, res, next) => {
+    const id = req.params.user;
+    Nabung.deleteMany({
+            user: mongooose.Types.ObjectId(id)
         })
         .exec()
         .then(result => {
             res.status(200).json({
-                message: "Tansaksi Nabung terhapus"
+                message: "Tansaksi Nabung user tersebut terhapus"
             })
         })
         .catch((err) => {

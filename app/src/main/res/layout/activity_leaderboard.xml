@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Leaderboard">
+
+    <Button
+        android:id="@+id/btn_back"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="10dp"
+        android:text="&lt; Back"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:background="@color/transparent">
+    </Button>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_below="@+id/btn_back"
+        android:id="@+id/lvleaderboard"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingVertical="5dp"
+        android:paddingHorizontal="10dp"
+        android:layout_marginHorizontal="20dp"
+        android:background="@drawable/roundbg"
+        android:layout_marginBottom="20dp">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+</RelativeLayout>

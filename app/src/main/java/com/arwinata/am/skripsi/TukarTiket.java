@@ -1,6 +1,9 @@
 package com.arwinata.am.skripsi;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
@@ -9,28 +12,47 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.arwinata.am.skripsi.Retrofit.CheckingConnection;
-import com.arwinata.am.skripsi.Retrofit.model.DataVoucher;
+import com.arwinata.am.skripsi.Retrofit.model.DataTiket;
+import com.arwinata.am.skripsi.Retrofit.model.DataTukarTiket;
+import com.arwinata.am.skripsi.Retrofit.model.HistoriTransaksi;
+import com.arwinata.am.skripsi.Retrofit.model.JalaniMisi;
 import com.arwinata.am.skripsi.Retrofit.model.Tabungan;
-import com.arwinata.am.skripsi.Retrofit.model.TukarVoucher;
-import com.arwinata.am.skripsi.Retrofit.model.User;
 import com.arwinata.am.skripsi.Retrofit.service.SharedPrefManager;
 import com.arwinata.am.skripsi.Retrofit.service.UserClient;
+import com.arwinata.am.skripsi.bankActivity.BankDashboard;
+import com.arwinata.am.skripsi.bankActivity.QrCodeScanner;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 public class TukarTiket extends AppCompatActivity {
+    int CAMERA_PERMISSION_CODE = 1;
 
     Button tambahbotolA, kurangbotolA, tambahbotolB, kurangbotolB,
             tambahgelas, kuranggelas, maxbotolA, maxbotolB, maxgelas,
@@ -41,8 +63,32 @@ public class TukarTiket extends AppCompatActivity {
     SharedPrefManager sharedPrefManager;
     CheckingConnection ck;
 
-    Date currentTime = Calendar.getInstance().getTime();
+    private class DataMisi{
+        String misi, statusmisi;
 
+        public DataMisi(){}
+
+        public void setMisi(String misi) {
+            this.misi = misi;
+        }
+
+        public void setStatusmisi(String statusmisi) {
+            this.statusmisi = statusmisi;
+        }
+
+        public String getMisi() {
+            return misi;
+        }
+
+        public String getStatusmisi() {
+            return statusmisi;
+        }
+    }
+    DataMisi dataMisi = new DataMisi();
+
+    Date currentTime = Calendar.getInstance().getTime();
+    SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+    String datenow = df.format(currentTime);
 //    int a=20, b=30, c=50;
 
     @Override
@@ -70,6 +116,7 @@ public class TukarTiket extends AppCompatActivity {
         edtvoucherbotolB = findViewById(R.id.edtvoucherbotolB);
         edtvouchergelas = findViewById(R.id.edtvouchergelas);
 
+        cekmisi(sharedPrefManager.getSP_iduser());
         cektabungan(sharedPrefManager.getSP_iduser(), this);
 
 //        edtvoucherbotolA.setText("0");
@@ -265,7 +312,7 @@ public class TukarTiket extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(TukarTiket.this, Voucher.class);
+                Intent i = new Intent(TukarTiket.this, Tiket.class);
                 startActivity(i);
                 finish();
             }
@@ -274,26 +321,147 @@ public class TukarTiket extends AppCompatActivity {
         tukar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 addtransaksitukar(sharedPrefManager.getSP_iduser(), TukarTiket.this);
-
             }
         });
     }
 
+    public void cekmisi(final String user)
+    {
+        StringRequest stringRequest = new StringRequest(Request.Method.GET,
+                ck.getBASE_URL()+"/jalanimisi/"+user,
+                new com.android.volley.Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            JSONArray array = jsonObject.getJSONArray("misiUser");
+
+                            for(int i=0; i<array.length(); i++){
+                                JSONObject o = array.getJSONObject(i);
+
+                                JSONObject o2 = o.getJSONObject("misi");
+
+                                String misi = o2.getString("_id");
+                                String status = o.getString("status");
+                                String detailmisi = o2.getString("detailmisi");
+                                int target = o2.getInt("targetcapaian");
+
+                                if(detailmisi.toLowerCase().contains("tukarkan tabungan dengan 2 sticker bis")){
+                                    dataMisi.setMisi(misi);
+                                    dataMisi.setStatusmisi(status);
+                                }
+                            }
+                        } catch (JSONException e){
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new com.android.volley.Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
+    private void cektransaksiTukarTiket(final String user,final String misi, String status) {
+//        Toast.makeText(getApplicationContext(), "ini di cek misi "+misi, Toast.LENGTH_LONG).show();
+        if(status.equals("belum")) {
+            StringRequest stringRequest = new StringRequest(Request.Method.GET,
+                    ck.getBASE_URL() + "/tukartiket/" + user,
+                    new com.android.volley.Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+
+                            try {
+                                JSONObject jsonObject = new JSONObject(response);
+                                JSONArray array = jsonObject.getJSONArray("TransaksiTukarTiket");
+//
+                                String terakhirtransaksi = "";
+                                if (array.length() > 0) {
+                                    JSONObject o = array.getJSONObject(array.length() - 1);
+                                    terakhirtransaksi = o.getString("date");
+                                Toast.makeText(getApplicationContext(), terakhirtransaksi,Toast.LENGTH_LONG).show();
+                                } else if (array.length() == 0) {
+                                    terakhirtransaksi = "kosong wkwkwk";
+                                }
+//                            Toast.makeText(getApplicationContext(), terakhirtransaksi,Toast.LENGTH_LONG).show();
+                                updatemisiTukarTiket(user, misi, terakhirtransaksi);
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    },
+                    new com.android.volley.Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+            RequestQueue requestQueue = Volley.newRequestQueue(this);
+            requestQueue.add(stringRequest);
+        }else if(status.equals("sudah")){}
+    }
+
+    private void updatemisiTukarTiket(String user, String misi, String terakhirtransaksi) {
+        if(terakhirtransaksi.equals(datenow))
+        {
+//            Toast.makeText(getApplicationContext(), "MISI TIDAK TERUPDATE! "+terakhirtransaksi,Toast.LENGTH_LONG).show();
+        } else {
+            //membuat okhttp client
+//            OkHttpClient.Builder okhttp = new OkHttpClient.Builder();
+//
+//            HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+//            logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+//            okhttp.addInterceptor(logging);
+
+            //membuat instance retrofit
+            Retrofit.Builder builder = new Retrofit.Builder()
+                    .baseUrl(ck.getBASE_URL())
+                    .addConverterFactory(GsonConverterFactory.create());
+//                    .client(okhttp.build());
+
+            Retrofit retrofit = builder.build();
+
+            JalaniMisi newjalanimisi = new JalaniMisi(user, misi, "sudah", "belum", datenow);
+
+            //mendapatkan client & memanggil object
+            UserClient client = retrofit.create(UserClient.class);
+            Call<JalaniMisi> call2 = client.updateJalaniMisi(newjalanimisi);
+
+            call2.enqueue(new Callback<JalaniMisi>() {
+                @Override
+                public void onResponse(Call<JalaniMisi> call, Response<JalaniMisi> response) {
+                    if(response.isSuccessful()){
+                        Toast.makeText(getApplicationContext(), "Selamat Anda Menyelesaikan Misi! Ke halaman misi untuk claim!",Toast.LENGTH_LONG).show();
+                    }
+              }
+
+                @Override
+                public void onFailure(Call<JalaniMisi> call, Throwable t) {
+
+                }
+            });
+        }
+    }
+
     public void cektabungan(String iduser, final Context context){
         //membuat okhttp client
-        OkHttpClient.Builder okhttp = new OkHttpClient.Builder();
-
-        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
-        okhttp.addInterceptor(logging);
+//        OkHttpClient.Builder okhttp = new OkHttpClient.Builder();
+//
+//        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+//        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+//        okhttp.addInterceptor(logging);
 
         //membuat instance retrofit
         Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl(ck.getBASE_URL())
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(okhttp.build());
+                .addConverterFactory(GsonConverterFactory.create());
+//                .client(okhttp.build());
 
         Retrofit retrofit = builder.build();
 
@@ -339,40 +507,45 @@ public class TukarTiket extends AppCompatActivity {
         int jmlbotolB = voucherB*5;
         int jmlgelas = voucherC*10;
 
-        TukarVoucher voucherbaru = new TukarVoucher(
+        DataTukarTiket voucherbaru = new DataTukarTiket(
                 user,
-                currentTime,
+                datenow,
                 jmlVoucher,
                 jmlbotolA,
                 jmlbotolB,
                 jmlgelas);
 
-        //membuat okhttp client
-        OkHttpClient.Builder okhttp = new OkHttpClient.Builder();
+        if(jmlVoucher >= 2){
+            cektransaksiTukarTiket(sharedPrefManager.getSP_iduser(), dataMisi.getMisi(), dataMisi.getStatusmisi());
+        }
 
-        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
-        okhttp.addInterceptor(logging);
+        //membuat okhttp client
+//        OkHttpClient.Builder okhttp = new OkHttpClient.Builder();
+//
+//        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+//        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+//        okhttp.addInterceptor(logging);
 
         //membuat instance retrofit
         Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl(ck.getBASE_URL())
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(okhttp.build());
+                .addConverterFactory(GsonConverterFactory.create());
+//                .client(okhttp.build());
 
         Retrofit retrofit = builder.build();
 
         final UserClient client = retrofit.create(UserClient.class);
-        Call<TukarVoucher> call = client.tukarVoucher(voucherbaru);
+        Call<DataTukarTiket> call = client.tukarTiket(voucherbaru);
 
-        call.enqueue(new Callback<TukarVoucher>() {
+        call.enqueue(new Callback<DataTukarTiket>() {
             @Override
-            public void onResponse(Call<TukarVoucher> call, Response<TukarVoucher> response) {
-                updatejmlvoucher(user, response.body().getJmlVoucher());
+            public void onResponse(Call<DataTukarTiket> call, Response<DataTukarTiket> response) {
+                updatejmlvoucher(user, response.body().getJmlTiket());
+                addHistory(user, "Tukar Tiket sebanyak "+response.body().getJmlTiket(), datenow);
             }
 
             @Override
-            public void onFailure(Call<TukarVoucher> call, Throwable t) {
+            public void onFailure(Call<DataTukarTiket> call, Throwable t) {
                 Toast.makeText(context, "Maaf penukaran tiket gagal :(", Toast.LENGTH_SHORT).show();
             }
         });
@@ -381,53 +554,86 @@ public class TukarTiket extends AppCompatActivity {
     public void updatejmlvoucher(final String user, final int jmlvoucher)
     {
         //membuat okhttp client
-        OkHttpClient.Builder okhttp = new OkHttpClient.Builder();
-
-        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
-        okhttp.addInterceptor(logging);
+//        OkHttpClient.Builder okhttp = new OkHttpClient.Builder();
+//
+//        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+//        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+//        okhttp.addInterceptor(logging);
 
         //membuat instance retrofit
         Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl(ck.getBASE_URL())
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(okhttp.build());
+                .addConverterFactory(GsonConverterFactory.create());
+//                .client(okhttp.build());
 
         final Retrofit retrofit = builder.build();
 
         final UserClient client = retrofit.create(UserClient.class);
-        Call<DataVoucher> call = client.cekVoucher(user);
+        Call<DataTiket> call = client.cekTiket(user);
 
-        call.enqueue(new Callback<DataVoucher>() {
+        call.enqueue(new Callback<DataTiket>() {
             @Override
-            public void onResponse(Call<DataVoucher> call, Response<DataVoucher> response) {
+            public void onResponse(Call<DataTiket> call, Response<DataTiket> response) {
                 edtvoucherbotolA.setText("0");
                 edtvoucherbotolB.setText("0");
                 edtvouchergelas.setText("0");
 
-                int jmlvoucherlama = (response.body().getJmlVoucher()) + jmlvoucher;
+                int jmlvoucherlama = (response.body().getJmlTiket()) + jmlvoucher;
 
-                DataVoucher newDataVoucher = new DataVoucher(jmlvoucherlama);
+                DataTiket newDataTiket = new DataTiket(jmlvoucherlama);
 
                 final UserClient client = retrofit.create(UserClient.class);
-                Call<DataVoucher> call2 = client.updateVoucher(user, newDataVoucher);
+                Call<DataTiket> call2 = client.updateTiket(user, newDataTiket);
 
-                call2.enqueue(new Callback<DataVoucher>() {
+                call2.enqueue(new Callback<DataTiket>() {
                     @Override
-                    public void onResponse(Call<DataVoucher> call, Response<DataVoucher> response) {
-                        Toast.makeText(TukarTiket.this, "Tiket Berhasil ditukar!", Toast.LENGTH_SHORT).show();
+                    public void onResponse(Call<DataTiket> call, Response<DataTiket> response) {
+//                        Toast.makeText(TukarTiket.this, "Tiket Berhasil ditukar!", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
-                    public void onFailure(Call<DataVoucher> call, Throwable t) {
+                    public void onFailure(Call<DataTiket> call, Throwable t) {
 
                     }
                 });
             }
 
             @Override
-            public void onFailure(Call<DataVoucher> call, Throwable t) {
-                Toast.makeText(TukarTiket.this, "Data Voucher tidak ter-Update :(", Toast.LENGTH_SHORT).show();
+            public void onFailure(Call<DataTiket> call, Throwable t) {
+                Toast.makeText(TukarTiket.this, "Data Tiket tidak ter-Update :(", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void addHistory(String user, String namatransaksi, String datenow)
+    {
+//        OkHttpClient.Builder okhttp = new OkHttpClient.Builder();
+//
+//        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+//        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+//        okhttp.addInterceptor(logging);
+
+        //membuat instance retrofit
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl(ck.getBASE_URL())
+                .addConverterFactory(GsonConverterFactory.create());
+//                .client(okhttp.build());
+
+        Retrofit retrofit = builder.build();
+
+        HistoriTransaksi historiTransaksi = new HistoriTransaksi(user, namatransaksi, datenow);
+
+        final UserClient client = retrofit.create(UserClient.class);
+        Call<HistoriTransaksi> call = client.addHistori(historiTransaksi);
+        call.enqueue(new Callback<HistoriTransaksi>() {
+            @Override
+            public void onResponse(Call<HistoriTransaksi> call, Response<HistoriTransaksi> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<HistoriTransaksi> call, Throwable t) {
+
             }
         });
     }
